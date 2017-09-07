@@ -34,7 +34,7 @@ class Chat extends Component {
             <div id='chat'>
                 <div id='output'>
                     {ChatStore.getMessages.map((data, index) => {
-                        return (<p key={index}>{data.caller}:{data.message}</p>);
+                        return (<p key={index}>{data.caller}: {data.message}</p>);
                     })}
                 </div>
                 <form id='wstestform' onSubmit={this.submit}>
