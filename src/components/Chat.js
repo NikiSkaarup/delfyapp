@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import ChatStore from '../data/ChatStore'
+import { observer } from 'mobx-react';
+import ChatStore from '../data/ChatStore';
 import '../styles/Chat.css';
 
+@observer
 class Chat extends Component {
 
     constructor() {
@@ -31,7 +33,7 @@ class Chat extends Component {
         return (
             <div id='chat'>
                 <div id='output'>
-                    {ChatStore.getMessages().map((data, index) => {
+                    {ChatStore.getMessages.map((data, index) => {
                         return (<p key={index}>{data.caller}:{data.message}</p>);
                     })}
                 </div>

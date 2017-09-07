@@ -5,17 +5,10 @@ useStrict(true);
 const URL = "ws://localhost:8001";
 
 class ChatStore {
-    // OBSERVABLE
-    messages = [];
-
-    // Normal
+    @observable messages = [];
     ws;
 
     constructor() {
-        observable(this.messages);
-        action(this.addMessage);
-        computed(this.getMessages);
-
         this.ws = new WebSocket(URL);
         this.ws.onopen = (evt) => { this.onOpen(evt) };
         this.ws.onclose = (evt) => { this.onClose(evt) };
@@ -63,13 +56,15 @@ class ChatStore {
         this.doSend(message);
     }
 
-    // ACTION
-    addMessage(data) {
-        this.messages.push(data);
+    @action addMessage(data) {
+        console.log(data);
+        let messages = this.messages;
+        messages.push(data);
+        this.messages = messages;
     }
-    // COMPUTED
-    getMessages() {
-        return this.messages;
+
+    @computed get getMessages() {
+        return this.messages.filter(() => true);
     }
 
 }
