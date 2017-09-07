@@ -1,0 +1,32 @@
+
+#chat {
+    height: calc(100% -56px);
+}
+
+#output {
+    height: calc(100% - 2em);
+    overflow-y: scroll;
+    padding: .5em;
+    border-top: 1px solid #555;
+    font-size: 1.5em;
+}
+
+#wstestform {
+    height: 2em;
+}
+
+#input {
+    font-size: 1.5em;
+    background-color: transparent;
+    color: inherit;
+    border: none;
+    border-top: 1px solid #555;
+    display: block;
+    width: 100%;
+    outline: none;
+    padding: .5em;
+}
+
+.hidden {
+    display: none;
+}
