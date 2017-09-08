@@ -17,6 +17,10 @@ body {
   height: 100%;
 }
 
+input, button, select, textarea {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 div#root {
   height: 100%; 
 }

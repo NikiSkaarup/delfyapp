@@ -29,13 +29,22 @@ class Chat extends Component {
         this.setState({ input: "" })
     }
 
+    scrollOutput = () => {
+        setTimeout(() => {
+            let target = document.getElementById('output');
+            //console.log(target); // Spammy, figure out a better way to do this? wait probably not needed since this isn't a chat app....
+            target.scrollTop = target.scrollHeight;
+        }, 0);
+    }
+
     render() {
         return (
             <div id='chat'>
-                <div id='output'>
+                <div id='output' onChange={this.scrollOutput}>
                     {ChatStore.getMessages.map((data, index) => {
                         return (<p key={index}>{data.caller}: {data.message}</p>);
                     })}
+                    {this.scrollOutput()}
                 </div>
                 <form id='wstestform' onSubmit={this.submit}>
                     <input type='text' name='text' id='input'

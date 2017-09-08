@@ -4,27 +4,28 @@
 }
 
 #output {
-    height: calc(100% - 2em);
+    height: calc(100% - 3rem);
     overflow-y: scroll;
-    padding: .5em;
+    padding: .5rem;
     border-top: 1px solid #555;
-    font-size: 1.5em;
+    font-size: 1.5rem;
 }
 
 #wstestform {
-    height: 2em;
+    height: 3rem;
 }
 
 #input {
-    font-size: 1.5em;
+    font-size: 1.5rem;
     background-color: transparent;
     color: inherit;
     border: none;
     border-top: 1px solid #555;
     display: block;
+    height: 100%;
+    padding: .5rem;
     width: 100%;
     outline: none;
-    padding: .5em;
 }
 
 .hidden {
