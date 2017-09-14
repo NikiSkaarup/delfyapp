@@ -31,6 +31,12 @@ let feedback = {
             'text': 'Too much light',
         },
     ],
+    'general': [
+        {
+            'id': 'c',
+            'text': 'meh light',
+        },
+    ],
 }
 
 let voting = {
