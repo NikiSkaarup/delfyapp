@@ -4,29 +4,31 @@
 
 let types = [
     'setup',
-    'questions',
+    'feedback',
     'voting',
 ];
 
 let setup = {
     'type': 'setup',
+    'title': 'Name of evaluation',
     'positive': 'What was good about x',
     'negative': 'What was bad about x',
     'amount': 1,
-}
+    'general feeback': true,
+};
 
-let questions = {
-    'type': 'questions',
+let feedback = {
+    'type': 'feedback',
     'positive': [
         {
             'id': 'a',
-            'question': 'Not much light',
+            'text': 'Not much light',
         }
     ],
     'negative': [
         {
             'id': 'b',
-            'question': 'Too much light',
+            'text': 'Too much light',
         },
     ],
 }
@@ -40,4 +42,4 @@ let voting = {
 }
 
 export default types;
-export { types, setup, question, voting };
+export { types, setup, feedback, voting };

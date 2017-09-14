@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Header from './Header.js';
-import Chat from './Chat.js';
+import Header from './Header';
+import Chat from './Chat';
 import '../styles/App.css';
 
 class App extends Component {
