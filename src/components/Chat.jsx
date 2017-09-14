@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import ChatStore from '../data/ChatStore';
-import '../styles/Chat.css';
+import '../css/Chat.css';
 
 @observer
 class Chat extends Component {

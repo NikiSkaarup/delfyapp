@@ -17,10 +17,11 @@
     "react-app-rewired": "^1.2.5"
   },
   "scripts": {
+    "build-css": "node-sass-chokidar ./src/styles -o ./src/css",
+    "watch-css": "npm run build-css && node-sass-chokidar ./src/styles -o ./src/css --watch --recursive",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
-    "test": "react-app-rewired test --env=jsdom",
-    "eject": "react-scripts eject"
+    "test": "react-app-rewired test --env=jsdom"
   },
   "repository": {
     "url": "https://github.com/nikiskaarup/delfyapp"
