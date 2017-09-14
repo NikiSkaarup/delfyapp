@@ -19,8 +19,8 @@
   "scripts": {
     "build-css": "node-sass-chokidar ./src/styles -o ./src/css",
     "watch-css": "npm run build-css && node-sass-chokidar ./src/styles -o ./src/css --watch --recursive",
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "start": "npm run build-css && react-app-rewired start",
+    "build": "npm run build-css && react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom"
   },
   "repository": {
