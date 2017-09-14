@@ -5,6 +5,7 @@
   "dependencies": {
     "mobx": "^3.2.2",
     "mobx-react": "^4.2.2",
+    "node-sass-chokidar": "^0.0.3",
     "react": "^15.6.1",
     "react-app-rewire-mobx": "^1.0.6",
     "react-dom": "^15.6.1",
@@ -19,8 +20,8 @@
   "scripts": {
     "build-css": "node-sass-chokidar ./src/styles -o ./src/css",
     "watch-css": "npm run build-css && node-sass-chokidar ./src/styles -o ./src/css --watch --recursive",
-    "start": "npm run build-css && react-app-rewired start",
-    "build": "npm run build-css && react-app-rewired build",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom"
   },
   "repository": {
