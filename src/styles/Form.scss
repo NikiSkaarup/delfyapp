@@ -1,0 +1,43 @@
+$foreground: #fafafa;
+$accent: #2C6A95;
+
+/* END of variables. */
+
+input,
+select,
+textarea,
+button,
+.button {
+    text-decoration: none;
+    border: solid 1px $accent;
+    background-color: transparent;
+    color: $foreground;
+    transition: background-color ease-in .15s;
+    display: block;
+    padding: .5rem;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+input,
+select,
+textarea,
+button,
+.button {
+    width: 16rem;
+}
+
+button,
+.button {
+    user-select: none;
+    &:hover {
+        background-color: $accent;
+    }
+}
+
+.input-group {
+    text-align: left;
+    &>label {
+        font-size: 1.5rem;
+    }
+}
