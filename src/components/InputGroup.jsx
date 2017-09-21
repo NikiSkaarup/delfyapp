@@ -7,10 +7,11 @@ class InputGroup extends Component {
                 <label htmlFor={this.props.id}>{this.props.title}</label>
                 <input
                     type={this.props.type}
-                    name={this.props.title}
+                    name={this.props.id}
                     id={this.props.id}
                     onChange={this.props.onChange}
-                    placeholder={this.props.title} />
+                    placeholder={this.props.title}
+                    value={this.props.value} />
             </div>
         );
     }
