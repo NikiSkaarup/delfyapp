@@ -1,5 +1,6 @@
 
 import /*mobx,*/ { observable, computed, action, useStrict } from "mobx";
+import generate from 'nanoid/generate';
 
 useStrict(true);
 const URL = "ws://localhost:8001";
@@ -11,8 +12,10 @@ class CreateStore {
   @observable negative = "";
   @observable checkbox = false;
   @observable general = "";
+  @observable joinCode = "";
 
   @observable feedback = [];
+  @observable participants = [];
 
   ws;
 
@@ -84,7 +87,7 @@ class CreateStore {
   }
 
   @action setNum(num) {
-    let numInteger = Number.parseInt(num);
+    let numInteger = Number.parseInt(num, 10);
     if (Number.isInteger(numInteger) && numInteger >= 0) this.num = numInteger;
   }
 
@@ -102,6 +105,10 @@ class CreateStore {
 
   @action setGeneral(general) {
     this.general = general;
+  }
+
+  @action generateCode() {
+    this.joinCode = generate('1234567890abcdefghijklmnopqrstuvwxyz', 5);
   }
 }
 
