@@ -8,9 +8,9 @@ class Home extends Component {
         return (
             <div className="home">
                 <h1 className="title">Delfy</h1>
-                <p className="subtitle">Create a new Evaluation<br/> or Join an existing</p>
-                <Link to="/create" className="button">Create</Link>
-                <Link to="/join" className="button">Join</Link>
+                <p className="subtitle">Create a new Evaluation<br /> or Join an existing</p>
+                <Link to="/create" className="homebutton">Create</Link>
+                <Link to="/join" className="homebutton">Join</Link>
             </div>
         );
     }

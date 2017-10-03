@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { HashRouter as Router, Route } from 'react-router-dom';
 import { Provider } from 'mobx-react';
 import Header from './Header';
 import Home from './home/Home';
-import Create from './create/Create';
+import Create from './host/Create';
+import Monitor from './host/Monitor';
 import createStore from '../data/CreateStore';
 import ChatApp from './ChatApp';
 
@@ -11,7 +12,6 @@ const stores = {
     createStore
 };
 class RouterComponent extends Component {
-
 
     render() {
         return (
@@ -21,6 +21,7 @@ class RouterComponent extends Component {
                         <Header />
                         <Route exact path="/" component={Home} />
                         <Route path="/create" component={Create} />
+                        <Route path="/monitor" component={Monitor} />
                         <Route path="/join" component={Home} />
                         <Route path="/chatapp" component={ChatApp} />
                     </div>
