@@ -1,11 +1,22 @@
-
 import /*mobx,*/ { observable, computed, action, useStrict } from "mobx";
 
 useStrict(true);
 const URL = "ws://localhost:8001";
 
 class JoinStore {
-    @observable messages = [];
+    @observable title = "";
+    @observable num = 3;
+    @observable positive = "";
+    @observable negative = "";
+    @observable checkbox = false;
+    @observable general = "";
+    @observable joinCode = "";
+
+    @observable feedback = {
+        data: []
+    }
+    @observable participants = [];
+
     ws;
 
     constructor() {
@@ -29,9 +40,9 @@ class JoinStore {
     }
 
     onMessage = (evt, caller) => {
-        this.addMessage({ 
+        this.addMessage({
             "caller": caller,
-            "message": evt.data 
+            "message": evt.data
         })
     }
 
@@ -58,16 +69,32 @@ class JoinStore {
 
     @action addMessage(data) {
         console.log(data);
-        let messages = this.messages;
-        messages.push(data);
-        this.messages = messages;
+        //let messages = this.messages;
+        //messages.push(data);
+        //this.messages = messages;
     }
 
     @computed get getMessages() {
         return this.messages.filter(() => true);
     }
 
+    @computed get getEvaluation() {
+        return this.evaluation;
+    }
+
+    @action setPositive(positive) {
+        this.positive = positive;
+    }
+
+    @action setNegative(negative) {
+        this.negative = negative;
+    }
+
+    @action setGeneral(general) {
+        this.general = general;
+    }
+
+
 }
 
-const joinStore = new JoinStore();
-export default joinStore;
+export default new JoinStore();

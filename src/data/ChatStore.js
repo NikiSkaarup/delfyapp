@@ -29,9 +29,9 @@ class ChatStore {
     }
 
     onMessage = (evt, caller) => {
-        this.addMessage({ 
+        this.addMessage({
             "caller": caller,
-            "message": evt.data 
+            "message": evt.data
         })
     }
 
