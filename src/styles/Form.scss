@@ -14,8 +14,9 @@ button,
     color: $foreground;
     transition: background-color ease-in .15s;
     display: block;
-    padding: .5rem;
-    font-size: 1.5rem;
+    padding: .25rem .5rem;
+    font-size: 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin-bottom: 1rem;
 }
 

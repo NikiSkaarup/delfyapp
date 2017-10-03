@@ -1,25 +1,40 @@
 header.header {
     height: 56px;
     padding: 12px 0;
-}
-
-header.header > div {
-    width: 980px;
-    margin: 0 auto;
-}
-
-header.header .logo {
-    height: 32px;
-    width: 32px;
-}
-
-header.header .logo img {
-    height: 100%;
-    width: 100%;
-    animation: logo-spin infinite 2s linear;
+    &>div {
+        width: 980px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        .logo {
+            height: 32px;
+            width: 32px;
+            display: inline-block;
+            img {
+                height: 100%;
+                width: 100%;
+                animation: logo-spin infinite 2s linear;
+                border-radius: 50%;
+            }
+        }
+        .home-link {
+            text-decoration: none;
+            color: #fafafa;
+            display: inline-block;
+            padding: 0 .5rem;
+            font-size: 1.5rem;
+            &:active {
+                color: #fafafa;
+            }
+        }
+    }
 }
 
 @keyframes logo-spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
