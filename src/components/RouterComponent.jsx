@@ -5,11 +5,14 @@ import Header from './Header';
 import Home from './home/Home';
 import Create from './host/Create';
 import Monitor from './host/Monitor';
+import Join from './participant/Join';
 import createStore from '../data/CreateStore';
+import joinStore from '../data/JoinStore';
 import ChatApp from './ChatApp';
 
 const stores = {
-    createStore
+    createStore,
+    joinStore
 };
 class RouterComponent extends Component {
 
@@ -22,15 +25,13 @@ class RouterComponent extends Component {
                         <Route exact path="/" component={Home} />
                         <Route path="/create" component={Create} />
                         <Route path="/monitor" component={Monitor} />
-                        <Route path="/join" component={Home} />
+                        <Route path="/join" component={Join} />
                         <Route path="/chatapp" component={ChatApp} />
                     </div>
                 </Router>
             </Provider>
         );
     }
-
-
 }
 
 export default RouterComponent;

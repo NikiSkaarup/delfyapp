@@ -82,6 +82,10 @@ class JoinStore {
         return this.evaluation;
     }
 
+    @action setCode(joinCode) {
+        this.joinCode = joinCode;
+    }
+
     @action setPositive(positive) {
         this.positive = positive;
     }
