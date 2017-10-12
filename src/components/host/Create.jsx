@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import createHistory from 'history/createHashHistory';
 import { observer, inject } from 'mobx-react';
 import '../../css/Home.css';
 import InputGroup from '../InputGroup';
-
-const history = createHistory();
 
 @inject('createStore')
 @observer
@@ -15,7 +12,7 @@ class Create extends Component {
     changeNegative = e => this.props.createStore.setNegative(e.target.value);
     changeCheckbox = e => {
         this.props.createStore.setCheckbox((e.target.checked ? true : false));
-        console.log(e.target.checked);
+        //console.log(e.target.checked); //Debug code
     }
     changeGeneral = e => this.props.createStore.setGeneral(e.target.value);
 
@@ -23,7 +20,7 @@ class Create extends Component {
         event.preventDefault();
         this.props.createStore.generateCode();
         //CreateStore.updateEvaluation(this.state.evaluation);
-        history.push('/monitor');
+        this.props.history.push('/monitor');
         console.log(this.props.createStore);
     }
 
