@@ -29,17 +29,17 @@ let feedback = {
         {
             'id': 'a',
             'type': 'positive',
-            'text': 'Not much light',
+            'value': 'Not much light',
         },
         {
             'id': 'b',
             'type': 'negative',
-            'text': 'Too much light',
+            'value': 'Too much light',
         },
         {
             'id': 'c',
             'type': 'general',
-            'text': 'meh light',
+            'value': 'meh light',
         },
     ]
 }

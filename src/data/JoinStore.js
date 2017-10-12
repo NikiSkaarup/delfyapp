@@ -13,20 +13,20 @@ class JoinStore {
     @observable joinCode = "";
 
     @observable feedback = {
+        type: 'feedback',
         data: []
     }
     @observable participants = [];
 
-    @action onMessage(data) {
+    @action onMessage = (data) => {
         switch (data.type) {
             case 'config':
                 this.title = data.title;
                 this.num = data.amount;
-                this.positive = data.positive;
+                this.setPositive = data.positive;
                 this.negative = data.negative;
                 this.checkbox = data.general ? true : false;
                 this.general = data.general;
-                this.joinCode = data.joinCode;
                 break;
             default:
                 console.log(data);
@@ -34,28 +34,25 @@ class JoinStore {
         }
     }
 
-    @computed get getMessages() {
-        return this.messages.filter(() => true);
-    }
-
     @computed get getEvaluation() {
         return this.evaluation;
     }
 
-    @action setCode(joinCode) {
-        this.joinCode = joinCode;
+    @action addFeedback = (data) => {
+        this.feedback.data.push(data);
     }
 
-    @action setPositive(positive) {
-        this.positive = positive;
+    @action setFeedback = (e) => {
+        let fb = this.feedback;
+        let data = fb.data.find((fb) => fb.id === e.target.id);
+        if (data) {
+            data.value = e.target.value;
+        }
+        this.feedback = fb;
     }
 
-    @action setNegative(negative) {
-        this.negative = negative;
-    }
-
-    @action setGeneral(general) {
-        this.general = general;
+    @action setCode = (code) => {
+        this.joinCode = code;
     }
 
     joinHost() {

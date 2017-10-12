@@ -3,69 +3,107 @@ import { observer, inject } from 'mobx-react';
 import '../../css/Home.css';
 import InputGroup from '../InputGroup';
 
-@inject('createStore')
+@inject('joinStore')
 @observer
 class Feedback extends Component {
-    changeTitle = e => this.props.createStore.setTitle(e.target.value);
-    changeNum = e => this.props.createStore.setNum(e.target.value);
-    changePositive = e => this.props.createStore.setPositive(e.target.value);
-    changeNegative = e => this.props.createStore.setNegative(e.target.value);
-    changeCheckbox = e => this.props.createStore.setCheckbox((e.target.value === "true" ? true : false));
-    changeGeneral = e => this.props.createStore.setGeneral(e.target.value);
+    changePositive = e => this.props.joinStore.setPositive(e);
+    changeNegative = e => this.props.joinStore.setNegative(e);
+    changeFeedback = e => this.props.joinStore.setFeedback(e);
 
-    submitFeedback = (event) => {
-        event.preventDefault();
+    submitFeedback = (e) => {
+        e.preventDefault();
 
-        console.log(this.props.createStore);
+        console.log(this.props.joinStore);
     }
 
-    positiveFeedback = (numToRender, positive, val) => {
+    positiveFeedback = (numToRender, positive, feedback) => {
         let result = [];
-        result.push(<h2 className="title q">{positive}</h2>);
-        for (let i = 0; i < numToRender; i++) {
+        result.push(<h2 key='0' className="title q">{positive}</h2>);
+        for (let i = 1; i <= numToRender; i++) {
+            let id = `positive-${i}`;
+            let data = feedback.data.find((el) => el.id === id);
+            let feedbackValue = '';
+            let feedbackObj = {
+                id: id,
+                type: 'positive',
+                value: feedbackValue
+            };
+            if(data) {
+                feedbackObj = data;
+                feedbackValue = data.value;
+            } else {
+                this.props.joinStore.addFeedback(feedbackObj);
+            }
             result.push(
-                <div>
-                    <InputGroup id={"positive-" + i}
+                <div key={i}>
+                    <InputGroup id={id}
                         type="text"
                         x-num={i}
-                        onChange={this.changeGeneral}
-                        value={val} />
+                        onChange={this.changeFeedback}
+                        value={feedbackValue} />
                 </div >
             );
         }
         return result;
     }
 
-    negativeFeedback = (numToRender, negative, val) => {
+    negativeFeedback = (numToRender, negative, feedback) => {
         let result = [];
-        result.push(<h2 className="title q">{negative}</h2>);
-        for (let i = 0; i < numToRender; i++) {
+        result.push(<h2 key='0' className="title q">{negative}</h2>);
+        for (let i = 1; i <= numToRender; i++) {
+            let id = `negative-${i}`;
+            let data = feedback.data.find((el) => el.id === id);
+            let feedbackValue = '';
+            let feedbackObj = {
+                id: id,
+                type: 'negative',
+                value: feedbackValue
+            };
+            if(data) {
+                feedbackObj = data;
+                feedbackValue = data.value;
+            } else {
+                this.props.joinStore.addFeedback(feedbackObj);
+            }
             result.push(
-                <div>
-                    <InputGroup id={"negative-" + i}
+                <div key={i}>
+                    <InputGroup id={id}
                         type="text"
                         x-num={i}
-                        onChange={this.changeGeneral}
-                        value={val} />
+                        onChange={this.changeFeedback}
+                        value={feedbackValue} />
                 </div >
             );
         }
         return result;
     }
 
-    generalFeedback = (shouldRender, general, val) => {
-        if (shouldRender) {
-            return (
-                <div>
-                    <h2 className="title q">{general}</h2>
-                    <InputGroup id="general"
-                        type="text"
-                        title="General feedback"
-                        onChange={this.changeGeneral}
-                        value={val} />
-                </div >
-            );
+    generalFeedback = (general, feedback) => {
+        
+        let id = 'general';
+        let data = feedback.data.find((el) => el.id === id);
+        let feedbackValue = '';
+        let feedbackObj = {
+            id: id,
+            type: 'general',
+            value: feedbackValue
+        };
+        if(data) {
+            feedbackObj = data;
+            feedbackValue = data.value;
+        } else {
+            this.props.joinStore.addFeedback(feedbackObj);
         }
+        return (
+            <div>
+                <h2 className="title q">{general}</h2>
+                <InputGroup id={id}
+                    type="text"
+                    title="General feedback"
+                    onChange={this.changeFeedback}
+                    value={feedbackValue} />
+            </div >
+        );
     }
 
     render() {
@@ -75,18 +113,18 @@ class Feedback extends Component {
             positive,
             negative,
             checkbox,
-            general
-        } = this.props.createStore;
+            general,
+            feedback,
+        } = this.props.joinStore;
 
         return (
             <form className="home">
                 <h1 className="title">{title}</h1>
 
+                {this.positiveFeedback(num, positive, feedback)}
+                {this.negativeFeedback(num, negative, feedback)}
 
-                {this.positiveFeedback(num, positive, "val")}
-                {this.negativeFeedback(num, negative, )}
-
-                {this.generalFeedback(checkbox, general, "val")}
+                {checkbox && this.generalFeedback(general, feedback)}
 
                 <button type="submit" onClick={this.submitFeedback}>Submit</button>
             </form>
