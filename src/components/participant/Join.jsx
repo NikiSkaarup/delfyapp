@@ -12,8 +12,8 @@ class Join extends Component {
         event.preventDefault();
         //this.props.createStore.generateCode();
         //CreateStore.updateEvaluation(this.state.evaluation);
-
         console.log(this.props.joinStore);
+        this.props.joinStore.joinHost();
     }
 
     render() {

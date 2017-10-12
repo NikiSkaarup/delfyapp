@@ -45,10 +45,15 @@ class CreateStore {
     this.general = general;
   }
 
-  @action onMessage(data) {
+  @action setJoinCode(data) {
+    this.joinCode = data;
+  }
+
+  @action onMessage = (data) => {
+    console.log(data);
     switch (data.type) {
       case 'config':
-        this.joinCode = data.code;
+        this.setJoinCode(data.code);
         break;
       default:
         console.log(data);
@@ -56,7 +61,8 @@ class CreateStore {
     }
   }
 
-  @action startHosting() {
+  @action startHosting = () => {
+    console.log('startHosting');
     socket.subscribe(this.onMessage);
 
     let host = {

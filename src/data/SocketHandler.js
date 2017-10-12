@@ -4,6 +4,10 @@ class SocketHandler {
   subscribers = [];
   ws;
 
+  constructor() {
+    this.reconnect();
+  }
+
   reconnect = () => {
     this.ws = new WebSocket(URL);
     this.ws.onopen = (evt) => { this.onOpen(evt) };
@@ -13,31 +17,33 @@ class SocketHandler {
   }
 
   onOpen = (evt) => {
-    console.log('Websocket Opened')
-  }
+    console.log('Websocket Opened');
+  };
 
   onMessage = (evt) => {
+    console.log(evt);
     this.subscribers.forEach((subscriber) => {
-      subscriber(evt.data);
+      subscriber(JSON.parse(evt.data));
     });
-  }
+  };
 
   onClose = (evt) => {
     console.log('Websocket Closed')
     setTimeout(this.reconnect, 2000);
-  }
+  };
 
   onError = (evt) => {
     console.log('Websocket Error: ' + evt.data);
-  }
+  };
 
-  send(data) {
-    this.ws.send(data);
-  }
+  send = (data) => {
+    this.ws.send(JSON.stringify(data));
+  };
 
-  subscribe(callback) {
-    if (this.subscribers.length === 0)
-      this.reconnect();
+  subscribe = (callback) => {
+    console.log('subscribe');
+    //if (this.subscribers.length === 0)
+    //this.reconnect();
     this.subscribers.push(callback);
   }
 
