@@ -83,7 +83,7 @@ class Feedback extends Component {
                 <h1 className="title">{title}</h1>
 
 
-                {console.log(this.positiveFeedback(num, positive, "val"))}
+                {this.positiveFeedback(num, positive, "val")}
                 {this.negativeFeedback(num, negative, )}
 
                 {this.generalFeedback(checkbox, general, "val")}
