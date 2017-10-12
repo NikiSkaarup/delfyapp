@@ -3,45 +3,50 @@
 */
 
 let types = [
-    'setup',
+    'host',
+    'join',
     'feedback',
     'voting',
 ];
 
-let setup = {
-    'type': 'setup',
+let host = {
+    'type': 'host',
     'title': 'Name of evaluation',
     'positive': 'What was good about x',
     'negative': 'What was bad about x',
     'amount': 1,
-    'general feeback': true,
-};
+    'general': 'what other feedback do you have?',
+}
+
+let join = {
+    'type': 'join',
+    'code': 'Sws342',
+}
 
 let feedback = {
     'type': 'feedback',
-    'positive': [
+    'data': [
         {
             'id': 'a',
+            'type': 'positive',
             'text': 'Not much light',
-        }
-    ],
-    'negative': [
+        },
         {
             'id': 'b',
+            'type': 'negative',
             'text': 'Too much light',
         },
-    ],
-    'general': [
         {
             'id': 'c',
+            'type': 'general',
             'text': 'meh light',
         },
-    ],
+    ]
 }
 
 let voting = {
     'type': 'voting',
-    'votes': [
+    'data': [
         'a',
         'b',
     ],
