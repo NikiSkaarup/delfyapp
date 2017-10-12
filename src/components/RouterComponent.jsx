@@ -9,7 +9,6 @@ import Join from './participant/Join';
 import Feedback from './participant/Feedback';
 import createStore from '../data/CreateStore';
 import joinStore from '../data/JoinStore';
-import ChatApp from './ChatApp';
 
 const stores = {
     createStore,
@@ -29,7 +28,6 @@ class RouterComponent extends Component {
                             <Route path="/monitor" component={Monitor} />
                             <Route path="/join" component={Join} />
                             <Route path="/feedback" component={Feedback} />
-                            <Route path="/chatapp" component={ChatApp} />
                         </Switch>
                     </div>
                 </BrowserRouter>
