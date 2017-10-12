@@ -20,7 +20,8 @@ class Feedback extends Component {
     }
 
     positiveFeedback = (numToRender, positive, val) => {
-        let result = <h2 className="title q">{positive}</h2>;
+        let result = [];
+        result.push(<h2 className="title q">{positive}</h2>);
         for (let i = 0; i < numToRender; i++) {
             result.push(
                 <div>
@@ -34,8 +35,10 @@ class Feedback extends Component {
         }
         return result;
     }
+
     negativeFeedback = (numToRender, negative, val) => {
-        let result = <h2 className="title q">{negative}</h2>;
+        let result = [];
+        result.push(<h2 className="title q">{negative}</h2>);
         for (let i = 0; i < numToRender; i++) {
             result.push(
                 <div>
@@ -80,10 +83,10 @@ class Feedback extends Component {
                 <h1 className="title">{title}</h1>
 
 
-                {this.positiveFeedback(num, positive, )}
+                {console.log(this.positiveFeedback(num, positive, "val"))}
                 {this.negativeFeedback(num, negative, )}
 
-                {this.generalFeedback(checkbox, general, )}
+                {this.generalFeedback(checkbox, general, "val")}
 
                 <button type="submit" onClick={this.submitFeedback}>Submit</button>
             </form>
