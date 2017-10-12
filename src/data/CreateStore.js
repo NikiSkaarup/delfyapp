@@ -1,9 +1,8 @@
 
 import /*mobx,*/ { observable, computed, action, useStrict } from "mobx";
-import generate from 'nanoid/generate';
+import socket from './SocketHandler';
 
 useStrict(true);
-const URL = "ws://localhost:8001";
 
 class CreateStore {
   @observable title = "";
@@ -11,72 +10,11 @@ class CreateStore {
   @observable positive = "";
   @observable negative = "";
   @observable checkbox = false;
-  @observable general = "";
+  @observable general = ""; or
   @observable joinCode = "";
 
   @observable feedback = [];
   @observable participants = [];
-
-  ws;
-
-  constructor() {
-    this.ws = new WebSocket(URL);
-    this.ws.onopen = (evt) => { this.onOpen(evt) };
-    this.ws.onclose = (evt) => { this.onClose(evt) };
-    this.ws.onmessage = (evt) => { this.onMessage(evt, 'recieved') };
-    this.ws.onerror = (evt) => { this.onError(evt) };
-  }
-
-  reconnect = () => {
-    this.ws = new WebSocket(URL);
-    this.ws.onopen = (evt) => { this.onOpen(evt) };
-    this.ws.onclose = (evt) => { this.onClose(evt) };
-    this.ws.onmessage = (evt) => { this.onMessage(evt, 'recieved') };
-    this.ws.onerror = (evt) => { this.onError(evt) };
-  }
-
-  onOpen = (evt) => {
-    console.log('Websocket Opened')
-  }
-
-  onMessage = (evt, caller) => {
-    this.addMessage({
-      "caller": caller,
-      "message": evt.data
-    })
-  }
-
-  onClose = (evt) => {
-    console.log('Websocket Closed')
-    setTimeout(this.reconnect, 2000);
-  }
-
-  onError = (evt) => {
-    console.log('Websocket Error: ' + evt.data);
-  }
-
-  doSend = (data) => {
-    this.ws.send(data);
-  }
-
-  sendMessage(message) {
-    this.addMessage({
-      "caller": "sent",
-      "message": message
-    });
-    this.doSend(message);
-  }
-
-  @action addMessage(data) {
-    console.log(data);
-    //let messages = this.messages;
-    //messages.push(data);
-    //this.messages = messages;
-  }
-
-  @computed get getMessages() {
-    return this.messages.filter(() => true);
-  }
 
   @computed get getEvaluation() {
     return this.evaluation;
@@ -107,8 +45,33 @@ class CreateStore {
     this.general = general;
   }
 
-  @action generateCode() {
-    this.joinCode = generate('1234567890abcdefghijklmnopqrstuvwxyz', 5);
+  @action onMessage(data) {
+    switch (data.type) {
+      case 'config':
+        this.joinCode = data.code;
+        break;
+      default:
+        console.log(data);
+        break;
+    }
+  }
+
+  @action startHosting() {
+    socket.subscribe(this.onMessage);
+
+    let host = {
+      type: 'host',
+      title: this.title,
+      positive: this.positive,
+      negative: this.negative,
+      amount: this.num,
+    }
+
+    if (this.checkbox) {
+      host.general = this.general;
+    }
+
+    socket.send(host);
   }
 }
 

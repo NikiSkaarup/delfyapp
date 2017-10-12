@@ -1,7 +1,7 @@
 import /*mobx,*/ { observable, computed, action, useStrict } from "mobx";
+import socket from './SocketHandler';
 
 useStrict(true);
-const URL = "ws://localhost:8001";
 
 class JoinStore {
     @observable title = "";
@@ -17,61 +17,21 @@ class JoinStore {
     }
     @observable participants = [];
 
-    ws;
-
-    constructor() {
-        this.ws = new WebSocket(URL);
-        this.ws.onopen = (evt) => { this.onOpen(evt) };
-        this.ws.onclose = (evt) => { this.onClose(evt) };
-        this.ws.onmessage = (evt) => { this.onMessage(evt, 'recieved') };
-        this.ws.onerror = (evt) => { this.onError(evt) };
-    }
-
-    reconnect = () => {
-        this.ws = new WebSocket(URL);
-        this.ws.onopen = (evt) => { this.onOpen(evt) };
-        this.ws.onclose = (evt) => { this.onClose(evt) };
-        this.ws.onmessage = (evt) => { this.onMessage(evt, 'recieved') };
-        this.ws.onerror = (evt) => { this.onError(evt) };
-    }
-
-    onOpen = (evt) => {
-        console.log('Websocket Opened')
-    }
-
-    onMessage = (evt, caller) => {
-        this.addMessage({
-            "caller": caller,
-            "message": evt.data
-        })
-    }
-
-    onClose = (evt) => {
-        console.log('Websocket Closed')
-        setTimeout(this.reconnect, 2000);
-    }
-
-    onError = (evt) => {
-        console.log('Websocket Error: ' + evt.data);
-    }
-
-    doSend = (data) => {
-        this.ws.send(data);
-    }
-
-    sendMessage(message) {
-        this.addMessage({
-            "caller": "sent",
-            "message": message
-        });
-        this.doSend(message);
-    }
-
-    @action addMessage(data) {
-        console.log(data);
-        //let messages = this.messages;
-        //messages.push(data);
-        //this.messages = messages;
+    @action onMessage(data) {
+        switch (data.type) {
+            case 'config':
+                this.title = data.title;
+                this.num = data.amount;
+                this.positive = data.positive;
+                this.negative = data.negative;
+                this.checkbox = data.general ? true : false;
+                this.general = data.general;
+                this.joinCode = data.joinCode;
+                break;
+            default:
+                console.log(data);
+                break;
+        }
     }
 
     @computed get getMessages() {
@@ -98,6 +58,14 @@ class JoinStore {
         this.general = general;
     }
 
+    joinHost() {
+        socket.subscribe(this.onMessage);
+        let join = {
+            type: 'join',
+            code: this.joinCode,
+        }
+        socket.send(join);
+    }
 
 }
 

@@ -18,7 +18,7 @@ class Create extends Component {
 
     createEvaluation = (event) => {
         event.preventDefault();
-        this.props.createStore.generateCode();
+        this.props.createStore.startHosting();
         //CreateStore.updateEvaluation(this.state.evaluation);
         this.props.history.push('/monitor');
         console.log(this.props.createStore);
