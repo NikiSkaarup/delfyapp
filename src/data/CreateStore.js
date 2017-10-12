@@ -49,14 +49,17 @@ class CreateStore {
     this.joinCode = data;
   }
 
-  @action onMessage = (data) => {
-    console.log(data);
-    switch (data.type) {
+  @action onMessage = (message) => {
+    console.log(message);
+    switch (message.type) {
       case 'config':
-        this.setJoinCode(data.code);
+        this.setJoinCode(message.code);
+        break;
+      case 'update':
+        this.participants = message.data;
         break;
       default:
-        console.log(data);
+        console.log(message);
         break;
     }
   }
