@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { HashRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { Provider } from 'mobx-react';
 import Header from './Header';
 import Home from './home/Home';
@@ -20,17 +20,19 @@ class RouterComponent extends Component {
     render() {
         return (
             <Provider {...stores}>
-                <Router>
+                <BrowserRouter>
                     <div style={{ height: "100%" }}>
                         <Header />
-                        <Route exact path="/" component={Home} />
-                        <Route path="/create" component={Create} />
-                        <Route path="/monitor" component={Monitor} />
-                        <Route path="/join" component={Join} />
-                        <Route path="/feedback" component={Feedback} />
-                        <Route path="/chatapp" component={ChatApp} />
+                        <Switch>
+                            <Route exact path="/" component={Home} />
+                            <Route path="/create" component={Create} />
+                            <Route path="/monitor" component={Monitor} />
+                            <Route path="/join" component={Join} />
+                            <Route path="/feedback" component={Feedback} />
+                            <Route path="/chatapp" component={ChatApp} />
+                        </Switch>
                     </div>
-                </Router>
+                </BrowserRouter>
             </Provider>
         );
     }
