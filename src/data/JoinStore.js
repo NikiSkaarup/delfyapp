@@ -23,7 +23,7 @@ class JoinStore {
             case 'config':
                 this.title = data.title;
                 this.num = data.amount;
-                this.setPositive = data.positive;
+                this.positive = data.positive;
                 this.negative = data.negative;
                 this.checkbox = data.general ? true : false;
                 this.general = data.general;
