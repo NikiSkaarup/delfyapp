@@ -12,6 +12,8 @@ class Feedback extends Component {
         e.preventDefault();
 
         console.log(this.props.joinStore);
+        this.props.joinStore.submitFeedback();
+        //this.props.history.push('/voting');
     }
 
     positiveFeedback = (numToRender, positive, d) => {

@@ -58,6 +58,9 @@ class CreateStore {
       case 'update':
         this.participants = message.data;
         break;
+      case 'feedback':
+        this.feedback.push(message.data);
+        break;
       default:
         console.log(message);
         break;

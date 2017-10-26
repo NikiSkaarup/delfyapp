@@ -1,4 +1,4 @@
-import /*mobx,*/ { observable, computed, action, useStrict } from 'mobx';
+import /*mobx,*/ { observable, computed, action, useStrict, toJS } from 'mobx';
 import socket from './SocketHandler';
 
 useStrict(true);
@@ -96,6 +96,11 @@ class JoinStore {
             code: this.joinCode,
         }
         socket.send(join);
+    }
+
+    submitFeedback = () => {
+        console.log(toJS(this.feedback));
+        socket.send(toJS(this.feedback));
     }
 
 }
