@@ -4,7 +4,8 @@ class InputGroup extends Component {
     render() {
         return (
             <div className="input-group">
-                <label htmlFor={this.props.id}>{this.props.title}</label>
+                {this.props.title !== undefined &&
+                    (<label htmlFor={this.props.id}>{this.props.title}</label>)}
                 <input
                     type={this.props.type}
                     name={this.props.id}
