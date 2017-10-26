@@ -1,4 +1,4 @@
-import /*mobx,*/ { observable, computed, action, useStrict } from "mobx";
+import /*mobx,*/ { observable, computed, action, useStrict } from 'mobx';
 import socket from './SocketHandler';
 
 useStrict(true);
@@ -50,7 +50,7 @@ class JoinStore {
             let generalFB = {
                 id: 'general',
                 type: 'general',
-                value: '',
+                val: '',
             };
             this.feedback.data.push(generalFB);
         }
@@ -62,7 +62,7 @@ class JoinStore {
             let fb = {
                 id: id,
                 type: type,
-                value: '',
+                val: '',
             };
             this.feedback.data.push(fb);
         }
@@ -78,7 +78,7 @@ class JoinStore {
 
     @action setFeedback = (e) => {
         let fb = this.feedback;
-        let data = fb.data[e.target.id];
+        let data = fb.data.find(el => el.id === e.target.id);
         if (data) {
             data.val = e.target.value;
             this.feedback = fb;

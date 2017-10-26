@@ -8,17 +8,16 @@ class InputGroup extends Component {
                 type={props.type}
                 name={props.id}
                 id={props.id}
-                onChange={props.onChange}
+                onChange={this.props.onChange}
                 placeholder={props.title}
                 value={props.value} />);
         } else {
             return (<textarea
                 name={props.id}
                 id={props.id}
-                onChange={props.onChange}
-                placeholder={props.title}>
-                {props.value}
-            </textarea>)
+                onChange={this.props.onChange}
+                placeholder={props.title}
+                value={props.value} />)
         }
     }
 
@@ -27,7 +26,7 @@ class InputGroup extends Component {
             <div className="input-group">
                 {this.props.title !== undefined &&
                     (<label htmlFor={this.props.id}>{this.props.title}</label>)}
-                    {this.generateInput(this.props)}
+                {this.generateInput(this.props)}
             </div>
         );
     }
