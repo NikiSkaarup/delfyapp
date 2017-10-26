@@ -24,7 +24,7 @@ class Feedback extends Component {
                 result.push(
                     <div key={(i + 1)}>
                         <InputGroup id={id}
-                            type="text"
+                            type="textarea"
                             onChange={this.changeFeedback}
                             value={data.val} />
                     </div >
@@ -44,7 +44,7 @@ class Feedback extends Component {
                 result.push(
                     <div key={(i + 1)}>
                         <InputGroup id={id}
-                            type="text"
+                            type="textarea"
                             onChange={this.changeFeedback}
                             value={data.val} />
                     </div >
@@ -62,8 +62,7 @@ class Feedback extends Component {
                 <div>
                     <h2 className="title q">{general}</h2>
                     <InputGroup id={id}
-                        type="text"
-                        title="General feedback"
+                        type="textarea"
                         onChange={this.changeFeedback}
                         value={data.val} />
                 </div >
