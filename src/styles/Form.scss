@@ -28,6 +28,10 @@ button,
     width: 16rem;
 }
 
+textarea {
+    resize: vertical;
+}
+
 button,
 .button {
     user-select: none;
