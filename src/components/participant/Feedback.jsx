@@ -6,8 +6,6 @@ import InputGroup from '../InputGroup';
 @inject('joinStore')
 @observer
 class Feedback extends Component {
-    changePositive = e => this.props.joinStore.setPositive(e);
-    changeNegative = e => this.props.joinStore.setNegative(e);
     changeFeedback = e => this.props.joinStore.setFeedback(e);
 
     submitFeedback = (e) => {
@@ -16,94 +14,61 @@ class Feedback extends Component {
         console.log(this.props.joinStore);
     }
 
-    positiveFeedback = (numToRender, positive, feedback) => {
+    positiveFeedback = (numToRender, positive, d) => {
         let result = [];
         result.push(<h2 key='0' className="title q">{positive}</h2>);
-        for (let i = 1; i <= numToRender; i++) {
-            let id = `positive-${i}`;
-            let data = feedback.data.find((el) => el.id === id);
-            let feedbackValue = '';
-            let feedbackObj = {
-                id: id,
-                type: 'positive',
-                value: feedbackValue
-            };
-            if(data) {
-                feedbackObj = data;
-                feedbackValue = data.value;
-            } else {
-                this.props.joinStore.addFeedback(feedbackObj);
+        for (let i = 0; i < numToRender; i++) {
+            let id = `p-${i}`;
+            let data = d.find((el) => el.id === id);
+            if (data) {
+                result.push(
+                    <div key={(i + 1)}>
+                        <InputGroup id={id}
+                            type="text"
+                            onChange={this.changeFeedback}
+                            value={data.val} />
+                    </div >
+                );
             }
-            result.push(
-                <div key={i}>
-                    <InputGroup id={id}
-                        type="text"
-                        x-num={i}
-                        onChange={this.changeFeedback}
-                        value={feedbackValue} />
-                </div >
-            );
         }
         return result;
     }
 
-    negativeFeedback = (numToRender, negative, feedback) => {
+    negativeFeedback = (numToRender, negative, d) => {
         let result = [];
         result.push(<h2 key='0' className="title q">{negative}</h2>);
-        for (let i = 1; i <= numToRender; i++) {
-            let id = `negative-${i}`;
-            let data = feedback.data.find((el) => el.id === id);
-            let feedbackValue = '';
-            let feedbackObj = {
-                id: id,
-                type: 'negative',
-                value: feedbackValue
-            };
-            if(data) {
-                feedbackObj = data;
-                feedbackValue = data.value;
-            } else {
-                this.props.joinStore.addFeedback(feedbackObj);
+        for (let i = 0; i < numToRender; i++) {
+            let id = `n-${i}`;
+            let data = d.find((el) => el.id === id);
+            if (data) {
+                result.push(
+                    <div key={(i + 1)}>
+                        <InputGroup id={id}
+                            type="text"
+                            onChange={this.changeFeedback}
+                            value={data.val} />
+                    </div >
+                );
             }
-            result.push(
-                <div key={i}>
-                    <InputGroup id={id}
-                        type="text"
-                        x-num={i}
-                        onChange={this.changeFeedback}
-                        value={feedbackValue} />
-                </div >
-            );
         }
         return result;
     }
 
-    generalFeedback = (general, feedback) => {
-        
+    generalFeedback = (general, d) => {
         let id = 'general';
-        let data = feedback.data.find((el) => el.id === id);
-        let feedbackValue = '';
-        let feedbackObj = {
-            id: id,
-            type: 'general',
-            value: feedbackValue
-        };
-        if(data) {
-            feedbackObj = data;
-            feedbackValue = data.value;
-        } else {
-            this.props.joinStore.addFeedback(feedbackObj);
+        let data = d.find((el) => el.id === id);
+        if (data) {
+            return (
+                <div>
+                    <h2 className="title q">{general}</h2>
+                    <InputGroup id={id}
+                        type="text"
+                        title="General feedback"
+                        onChange={this.changeFeedback}
+                        value={data.val} />
+                </div >
+            );
         }
-        return (
-            <div>
-                <h2 className="title q">{general}</h2>
-                <InputGroup id={id}
-                    type="text"
-                    title="General feedback"
-                    onChange={this.changeFeedback}
-                    value={feedbackValue} />
-            </div >
-        );
     }
 
     render() {
@@ -116,15 +81,15 @@ class Feedback extends Component {
             general,
             feedback,
         } = this.props.joinStore;
-
+        const data = feedback.data;
         return (
             <form className="home">
                 <h1 className="title">{title}</h1>
 
-                {this.positiveFeedback(num, positive, feedback)}
-                {this.negativeFeedback(num, negative, feedback)}
+                {this.positiveFeedback(num, positive, data)}
+                {this.negativeFeedback(num, negative, data)}
 
-                {checkbox && this.generalFeedback(general, feedback)}
+                {checkbox && this.generalFeedback(general, data)}
 
                 <button type="submit" onClick={this.submitFeedback}>Submit</button>
             </form>

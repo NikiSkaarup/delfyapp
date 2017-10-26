@@ -5,7 +5,7 @@ useStrict(true);
 
 class JoinStore {
     @observable title = "";
-    @observable num = 3;
+    @observable num = 1;
     @observable positive = "";
     @observable negative = "";
     @observable checkbox = false;
@@ -16,17 +16,17 @@ class JoinStore {
         type: 'feedback',
         data: []
     }
-    @observable participants = [];
+    @observable participants = observable([]);
+
+    constructor() {
+        window.joinStore = this;
+    }
 
     @action onMessage = (data) => {
         switch (data.type) {
             case 'config':
-                this.title = data.title;
-                this.num = data.amount;
-                this.positive = data.positive;
-                this.negative = data.negative;
-                this.checkbox = data.general ? true : false;
-                this.general = data.general;
+                console.log('received config');
+                this.configure(data);
                 break;
             default:
                 console.log(data);
@@ -34,28 +34,62 @@ class JoinStore {
         }
     }
 
+    @action configure = (data) => {
+        this.title = data.title;
+        this.num = data.amount;
+        this.positive = data.positive;
+        this.negative = data.negative;
+        this.checkbox = data.general ? true : false;
+        this.general = data.general;
+
+        this.generateFeedback('p', 'positive');
+        this.generateFeedback('n', 'negative');
+        if (this.checkbox) {
+            let generalFB = {
+                id: 'general',
+                type: 'general',
+                value: '',
+            };
+            console.log(generalFB);
+            this.feedback.data.push(generalFB);
+        }
+    }
+
+    @action generateFeedback = (baseid, type) => {
+        for (let i = 0; i < this.num; i++) {
+            let id = `${baseid}-${i}`;
+            let fb = {
+                id: id,
+                type: type,
+                value: '',
+            };
+            console.log(fb);
+            this.feedback.data.push(fb);
+        }
+    }
+
     @computed get getEvaluation() {
         return this.evaluation;
     }
 
-    @action addFeedback = (data) => {
-        this.feedback.data.push(data);
+    @computed get data() {
+        return this.feedback.data;
     }
 
     @action setFeedback = (e) => {
         let fb = this.feedback;
-        let data = fb.data.find((fb) => fb.id === e.target.id);
+        let data = fb.data[e.target.id];
         if (data) {
-            data.value = e.target.value;
+            data.val = e.target.value;
+            this.feedback = fb;
         }
-        this.feedback = fb;
     }
 
     @action setCode = (code) => {
         this.joinCode = code;
     }
 
-    joinHost() {
+    joinHost = () => {
         socket.subscribe(this.onMessage);
         let join = {
             type: 'join',

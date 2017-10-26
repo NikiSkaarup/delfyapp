@@ -21,10 +21,7 @@ class SocketHandler {
   };
 
   onMessage = (evt) => {
-    console.log(evt);
-    console.log(evt.data);
     let data = JSON.parse(evt.data);
-    console.log(data);
     this.subscribers.forEach((subscriber) => {
       subscriber(data);
     });

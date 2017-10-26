@@ -13,8 +13,8 @@ class CreateStore {
   @observable general = ""; or
   @observable joinCode = "";
 
-  @observable feedback = [];
-  @observable participants = [];
+  @observable feedback = observable([]);
+  @observable participants = observable([]);
 
   @computed get getEvaluation() {
     return this.evaluation;
