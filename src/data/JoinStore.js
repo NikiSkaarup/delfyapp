@@ -20,6 +20,8 @@ class JoinStore {
 
     constructor() {
         window.joinStore = this;
+        // set participants to 0 so we don't temporarily have an empty array of 1000 elements.
+        this.participants.length = 0;
     }
 
     @action onMessage = (data) => {
@@ -53,6 +55,14 @@ class JoinStore {
             console.log(generalFB);
             this.feedback.data.push(generalFB);
         }
+        /*
+        Prevent mobx from handling a 1000 element array
+        and make it just have a calculated length
+        based on the amount of elements.
+        */
+        let temp = 2 * this.num;
+        if (this.checkbox) temp++;
+        this.feedback.data.length = temp;
     }
 
     @action generateFeedback = (baseid, type) => {

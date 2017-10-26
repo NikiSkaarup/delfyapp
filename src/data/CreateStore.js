@@ -57,6 +57,7 @@ class CreateStore {
         break;
       case 'update':
         this.participants = message.data;
+        this.participants.length = message.data.length;
         break;
       default:
         console.log(message);
