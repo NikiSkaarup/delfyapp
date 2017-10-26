@@ -3,6 +3,10 @@ import socket from './SocketHandler';
 
 useStrict(true);
 
+/**
+ * handles participants side of things
+ * everything from joining to voting.
+ */
 class JoinStore {
     @observable title = "";
     @observable num = 1;
@@ -24,6 +28,9 @@ class JoinStore {
         this.participants.length = 0;
     }
 
+    /**
+     * function used for subscribing to the SocketHandler
+     */
     @action onMessage = (data) => {
         switch (data.type) {
             case 'config':
@@ -36,6 +43,11 @@ class JoinStore {
         }
     }
 
+    /**
+     * after joining using a join code
+     * configure the client based on the
+     * host setup config
+     */
     @action configure = (data) => {
         this.title = data.title;
         this.num = data.amount;
@@ -56,6 +68,10 @@ class JoinStore {
         }
     }
 
+    /**
+     * generate feedback data placeholders
+     * based on the required number
+     */
     @action generateFeedback = (baseid, type) => {
         for (let i = 0; i < this.num; i++) {
             let id = `${baseid}-${i}`;
@@ -89,6 +105,12 @@ class JoinStore {
         this.joinCode = code;
     }
 
+    /**
+     * subscribe to the SocketHandler and
+     * send join message along with join code
+     * if not subscribing before joining
+     * join reply might be lost
+     */
     joinHost = () => {
         socket.subscribe(this.onMessage);
         let join = {
@@ -98,6 +120,10 @@ class JoinStore {
         socket.send(join);
     }
 
+    /**
+     * send feedback to server, so it
+     * can pass on the data for the host
+     */
     submitFeedback = () => {
         console.log(toJS(this.feedback));
         socket.send(toJS(this.feedback));

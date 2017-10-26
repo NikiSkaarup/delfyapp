@@ -4,6 +4,10 @@ import socket from './SocketHandler';
 
 useStrict(true);
 
+/**
+ * handles everything to do with hosting
+ * a new evaluation from creation to viewing results
+ */
 class CreateStore {
   @observable title = "";
   @observable num = 3;
@@ -49,6 +53,9 @@ class CreateStore {
     this.joinCode = data;
   }
 
+  /**
+   * function used for subscribing to the SocketHandler
+   */
   @action onMessage = (message) => {
     console.log(message);
     switch (message.type) {
@@ -67,6 +74,12 @@ class CreateStore {
     }
   }
 
+  /**
+   * subsribes to the SocketHandler
+   * sets up the configuration and
+   * sends it across to the server
+   * so it can shared the config with clients
+   */
   @action startHosting = () => {
     console.log('startHosting');
     socket.subscribe(this.onMessage);

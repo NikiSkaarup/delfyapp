@@ -6,6 +6,10 @@ import InputGroup from '../InputGroup';
 @inject('createStore')
 @observer
 class Create extends Component {
+
+    /**
+     * handlechange functions for the input fields
+     */
     changeTitle = e => this.props.createStore.setTitle(e.target.value);
     changeNum = e => this.props.createStore.setNum(e.target.value);
     changePositive = e => this.props.createStore.setPositive(e.target.value);
@@ -16,6 +20,11 @@ class Create extends Component {
     }
     changeGeneral = e => this.props.createStore.setGeneral(e.target.value);
 
+    /**
+     * create evaluation and begin hosting it
+     * and transfer user to new page to observe
+     * status of evaluation and show join code
+     */
     createEvaluation = (event) => {
         event.preventDefault();
         this.props.createStore.startHosting();
@@ -24,6 +33,11 @@ class Create extends Component {
         console.log(this.props.createStore);
     }
 
+    /**
+     * optionally rendered input field,
+     * could have been done inline,
+     * but was externalized for readability
+     */
     generalFeedback = (shouldRender, val) => {
         if (shouldRender) {
             return (

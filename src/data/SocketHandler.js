@@ -1,8 +1,14 @@
 const URL = "ws://localhost:8001";
 
+/**
+ * Single Shared websocket
+ * where others can: 
+ * subscribe to new messages
+ * and send data.
+ */
 class SocketHandler {
   subscribers = [];
-  ws;
+  ws; // websocket
 
   constructor() {
     this.reconnect();

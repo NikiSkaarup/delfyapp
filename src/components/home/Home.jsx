@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import '../../css/Home.css';
 import '../../css/Form.css';
 
+/**
+ * Front page which should allow users to create or join
+ * an evaluation
+ */
 class Home extends Component {
     render() {
         return (

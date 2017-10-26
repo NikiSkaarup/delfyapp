@@ -1,6 +1,9 @@
-/*
-    Basic data formats for delphi v1.0.0
-*/
+/**
+ * Basic data formats for delphi v1.0.0
+ * 
+ * used as a reference for how the data types should look.
+ * current state: Outdated needs to be updated
+ */
 
 let types = [
     'host',
@@ -51,6 +54,3 @@ let voting = {
         'b',
     ],
 }
-
-export default types;
-export { types, setup, feedback, voting };

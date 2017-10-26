@@ -6,8 +6,15 @@ import InputGroup from '../InputGroup';
 @inject('joinStore')
 @observer
 class Feedback extends Component {
+
+    /**
+     * shared by all input fields for feedback
+     */
     changeFeedback = e => this.props.joinStore.setFeedback(e);
 
+    /**
+     * sends feedback and transfers user to new page
+     */
     submitFeedback = (e) => {
         e.preventDefault();
 
@@ -16,6 +23,9 @@ class Feedback extends Component {
         //this.props.history.push('/voting');
     }
 
+    /**
+     * returns the a group of input fields with a header
+     */
     positiveFeedback = (numToRender, positive, d) => {
         let result = [];
         result.push(<h2 key='0' className="title q">{positive}</h2>);
@@ -36,6 +46,9 @@ class Feedback extends Component {
         return result;
     }
 
+    /**
+     * returns the a group of input fields with a header
+     */
     negativeFeedback = (numToRender, negative, d) => {
         let result = [];
         result.push(<h2 key='0' className="title q">{negative}</h2>);
@@ -56,6 +69,9 @@ class Feedback extends Component {
         return result;
     }
 
+    /**
+     * returns the an input field with a header
+     */
     generalFeedback = (general, d) => {
         let id = 'general';
         let data = d.find((el) => el.id === id);

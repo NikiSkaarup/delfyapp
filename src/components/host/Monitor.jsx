@@ -7,6 +7,7 @@ import '../../css/Host.css';
 @observer
 class Create extends Component {
 
+    
     createEvaluation = (event) => {
         event.preventDefault();
         //CreateStore.updateEvaluation(this.state.evaluation);

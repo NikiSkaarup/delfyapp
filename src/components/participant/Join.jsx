@@ -6,8 +6,15 @@ import InputGroup from '../InputGroup';
 @inject('joinStore')
 @observer
 class Join extends Component {
+
+    /**
+     * updates the `join code` in the store
+     */
     changeCode = e => this.props.joinStore.setCode(e.target.value);
 
+    /**
+     * joins host and transfers user to new page
+     */
     joinEvaluation = (event) => {
         event.preventDefault();
         //this.props.createStore.generateCode();

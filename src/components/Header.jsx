@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import logo from '../logo.png';
 import '../css/Header.css';
 
+/**
+ * Header which holds the navigation bar & logo
+ */
 class Header extends Component {
     render() {
         return (
