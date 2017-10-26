@@ -52,7 +52,6 @@ class JoinStore {
                 type: 'general',
                 value: '',
             };
-            console.log(generalFB);
             this.feedback.data.push(generalFB);
         }
         /*
@@ -63,6 +62,8 @@ class JoinStore {
         let temp = 2 * this.num;
         if (this.checkbox) temp++;
         this.feedback.data.length = temp;
+        // save feedback.data.length for later
+        this.fdl = temp;
     }
 
     @action generateFeedback = (baseid, type) => {
@@ -73,7 +74,6 @@ class JoinStore {
                 type: type,
                 value: '',
             };
-            console.log(fb);
             this.feedback.data.push(fb);
         }
     }
@@ -92,6 +92,7 @@ class JoinStore {
         if (data) {
             data.val = e.target.value;
             this.feedback = fb;
+            this.feedback.data.length = this.fdl;
         }
     }
 
