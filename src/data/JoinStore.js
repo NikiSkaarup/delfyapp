@@ -54,16 +54,6 @@ class JoinStore {
             };
             this.feedback.data.push(generalFB);
         }
-        /*
-        Prevent mobx from handling a 1000 element array
-        and make it just have a calculated length
-        based on the amount of elements.
-        */
-        let temp = 2 * this.num;
-        if (this.checkbox) temp++;
-        this.feedback.data.length = temp;
-        // save feedback.data.length for later
-        this.fdl = temp;
     }
 
     @action generateFeedback = (baseid, type) => {
@@ -92,7 +82,6 @@ class JoinStore {
         if (data) {
             data.val = e.target.value;
             this.feedback = fb;
-            this.feedback.data.length = this.fdl;
         }
     }
 
