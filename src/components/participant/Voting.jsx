@@ -12,7 +12,7 @@ class Voting extends Component {
         e.preventDefault();
 
         console.log(this.props.joinStore);
-        this.props.joinStore.submitFeedback();
+        //this.props.joinStore.submitFeedback();
         //this.props.history.push('/voting');
     }
 
