@@ -7,6 +7,7 @@ import Create from './host/Create';
 import Monitor from './host/Monitor';
 import Join from './participant/Join';
 import Feedback from './participant/Feedback';
+import Voting from './participant/Voting';
 import createStore from '../data/CreateStore';
 import joinStore from '../data/JoinStore';
 
@@ -28,6 +29,7 @@ class RouterComponent extends Component {
                             <Route path="/monitor" component={Monitor} />
                             <Route path="/join" component={Join} />
                             <Route path="/feedback" component={Feedback} />
+                            <Route path="/voting" component={Voting} />
                         </Switch>
                     </div>
                 </BrowserRouter>

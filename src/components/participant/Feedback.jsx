@@ -20,7 +20,7 @@ class Feedback extends Component {
 
         console.log(this.props.joinStore);
         this.props.joinStore.submitFeedback();
-        //this.props.history.push('/voting');
+        this.props.history.push('/voting');
     }
 
     /**

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import '../../css/Home.css';
+import '../../css/Voting.css';
 
 @inject('joinStore')
 @observer
@@ -81,11 +82,35 @@ class Voting extends Component {
         return (
             <form className="home">
                 <h1 className="title">{title}</h1>
+                <p>Please choose the feedback you agree with and press submit when done.</p>
 
                 {this.positiveFeedback(num, positive, data)}
                 {this.negativeFeedback(num, negative, data)}
 
                 {checkbox && this.generalFeedback(general, data)}
+
+
+                {
+                    //example of feedback voting box
+                }
+
+                <div className="feedbackContainer">
+                    <div className="feedback">
+                        <div className="left"> X</div>
+                        <p>feedback vote box demo!</p>
+                        <div className="right"> ✓</div>
+                    </div>
+                    <div className="feedback">
+                        <div className="left"> X</div>
+                        <p>feedback vote box demo!</p>
+                        <div className="right"> ✓</div>
+                    </div>
+                    <div className="feedback">
+                        <div className="left"> X</div>
+                        <p>feedback vote box demo!</p>
+                        <div className="right"> ✓</div>
+                    </div>
+                </div>
 
                 <button type="submit" onClick={this.submitFeedback}>Submit</button>
             </form>
