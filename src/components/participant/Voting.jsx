@@ -82,18 +82,16 @@ class Voting extends Component {
         return (
             <form className="home">
                 <h1 className="title">{title}</h1>
-                <p>Please choose the feedback you agree with and press submit when done.</p>
+                <p>Please vote for all feedback you agree with. If you dont agree press the X to remove from view.</p>  {/* Clarify wording! */}
 
                 {this.positiveFeedback(num, positive, data)}
                 {this.negativeFeedback(num, negative, data)}
 
                 {checkbox && this.generalFeedback(general, data)}
 
-
                 {
                     //example of feedback voting box
                 }
-
                 <div className="feedbackContainer">
                     <div className="feedback">
                         <div className="left"> X</div>
@@ -112,7 +110,6 @@ class Voting extends Component {
                     </div>
                 </div>
 
-                <button type="submit" onClick={this.submitFeedback}>Submit</button>
             </form>
         );
     }
