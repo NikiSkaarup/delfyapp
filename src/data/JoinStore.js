@@ -1,7 +1,9 @@
 import /*mobx,*/ { observable, computed, action, useStrict, toJS } from 'mobx';
 import socket from './SocketHandler';
+import Cookies from 'universal-cookie';
 
 useStrict(true);
+const cookies = new Cookies();
 
 /**
  * handles participants side of things
@@ -20,6 +22,14 @@ class JoinStore {
         type: 'feedback',
         data: []
     }
+
+    @observable voting = {
+        type: 'voting',
+        feedback: {
+            data: []
+        },
+        data: []
+    };
     @observable participants = observable([]);
 
     constructor() {
@@ -36,6 +46,9 @@ class JoinStore {
             case 'config':
                 console.log('received config');
                 this.configure(data);
+                break;
+            case 'feedback':
+                this.voting.feedback = data;
                 break;
             default:
                 console.log(data);
@@ -55,6 +68,9 @@ class JoinStore {
         this.negative = data.negative;
         this.checkbox = data.general ? true : false;
         this.general = data.general;
+
+        this.id = data.id;
+        cookies.set('id', data.id);
 
         this.generateFeedback('p', 'positive');
         this.generateFeedback('n', 'negative');
@@ -117,6 +133,8 @@ class JoinStore {
             type: 'join',
             code: this.joinCode,
         }
+        let id = cookies.get('id');
+        if (id !== undefined) join.id = cookies.get('id');
         socket.send(join);
     }
 

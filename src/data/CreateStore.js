@@ -1,5 +1,5 @@
 
-import /*mobx,*/ { observable, computed, action, useStrict } from "mobx";
+import /*mobx,*/ { observable, computed, action, useStrict, toJS } from "mobx";
 import socket from './SocketHandler';
 
 useStrict(true);
@@ -14,7 +14,7 @@ class CreateStore {
   @observable positive = "";
   @observable negative = "";
   @observable checkbox = false;
-  @observable general = ""; or
+  @observable general = "";
   @observable joinCode = "";
 
   @observable feedback = observable([]);
@@ -67,6 +67,11 @@ class CreateStore {
         break;
       case 'feedback':
         this.feedback.push(message.data);
+
+        socket.send({
+          type: 'feedback',
+          data: toJS(this.feedback)
+        });
         break;
       default:
         console.log(message);
