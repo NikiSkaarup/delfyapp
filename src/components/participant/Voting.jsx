@@ -76,9 +76,9 @@ class Voting extends Component {
             negative,
             checkbox,
             general,
-            feedback,
+            allFeedback,
         } = this.props.joinStore;
-        const data = feedback.data;
+        const data = allFeedback.data;
         return (
             <form className="home">
                 <h1 className="title">{title}</h1>
