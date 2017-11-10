@@ -28,29 +28,42 @@ let join = {
 
 let feedback = {
     'type': 'feedback',
-    'data': [
-        {
-            'id': 'a',
+    'data': {
+        positive: [{
+            'id': 'akj32kfkm2',
+            'userId': 'eof12o23f2qkq9',
             'type': 'positive',
             'value': 'Not much light',
-        },
-        {
+        }],
+        negative: [{
             'id': 'b',
+            'userId': 'asd12o23f2qkq9',
             'type': 'negative',
             'value': 'Too much light',
-        },
-        {
+        }],
+        general: [{
             'id': 'c',
+            'userId': 'orf12o23f2qk19',
             'type': 'general',
             'value': 'meh light',
-        },
-    ]
+        }]
+    }
 }
 
 let voting = {
     'type': 'voting',
-    'data': [
-        'a',
-        'b',
-    ],
+    'data': {
+        positive: [{
+            'id': 'akj32kfkm2',
+            'userId': 'eof12o23f2qkq9',
+        }],
+        negative: [{
+            'id': 'b',
+            'userId': 'asd12o23f2qkq9',
+        }],
+        general: [{
+            'id': 'c',
+            'userId': 'orf12o23f2qk19',
+        }]
+    }
 }
