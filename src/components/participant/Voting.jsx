@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
+import { toJS } from 'mobx';
 import '../../css/Home.css';
 import '../../css/Voting.css';
 
@@ -16,65 +17,63 @@ class Voting extends Component {
         //this.props.history.push('/voting');
     }
 
-    positiveFeedback = (numToRender, positive, d) => {
-        let result = [];
-        result.push(<h2 key='0' className="title q">{positive}</h2>);
-        for (let i = 0; i < numToRender; i++) {
-            let id = `p-${i}`;
-            let data = d.find((el) => el.id === id);
-            if (data) {
-                result.push(
-                    <div key={(i + 1)}>
-                        {
-                            //DO LOTS OF NEW STUFF HERE!!!!!!!!!!!!!
-                        }
-                    </div >
-                );
-            }
-        }
-        return result;
-    }
 
-    negativeFeedback = (numToRender, negative, d) => {
-        let result = [];
-        result.push(<h2 key='0' className="title q">{negative}</h2>);
-        for (let i = 0; i < numToRender; i++) {
-            let id = `n-${i}`;
-            let data = d.find((el) => el.id === id);
-            if (data) {
-                result.push(
-                    <div key={(i + 1)}>
-                        {
-                            //DO LOTS OF NEW STUFF HERE!!!!!!!!!!!!!
-                        }
-                    </div >
-                );
-            }
-        }
-        return result;
-    }
+    dismissFeedback = (e) => {
+        const id = e.target.getAttribute('data-id');
+        const type = e.target.getAttribute('data-type');
+        this.props.joinStore.dismissFeedback(id, type);
+    };
 
-    generalFeedback = (general, d) => {
-        let id = 'general';
-        let data = d.find((el) => el.id === id);
-        if (data) {
-            return (
-                <div>
-                    {
-                        //DO LOTS OF NEW STUFF HERE!!!!!!!!!!!!!
-                    }
-                </div >
+    approveFeedback = (e) => {
+        const id = e.target.getAttribute('data-id');
+        const type = e.target.getAttribute('data-type');
+        this.props.joinStore.approveFeedback(id, type);
+    };
+
+    renderFeedbackContainer = (title, d) => {
+        console.log(toJS(d));
+        let result = [];
+        result.push(<h2 key='0' className="title q">{title}</h2>);
+        let temp = [];
+
+        for (let i = 0; i < d.length; i++) {
+            console.log('...');
+            const item = d[i];
+            if (item.determined !== undefined) continue;
+            console.log(`${title} - ${item}`);
+            temp.push(
+                <div className="feedback" key={i}>
+                    <div
+                        data-type={item.type}
+                        data-id={item.id}
+                        className="left"
+                        onClick={this.dismissFeedback}
+                    >
+                        X
+                    </div>
+                    <p>{item.val}</p>
+                    <div
+                        data-type={item.type}
+                        data-id={item.id}
+                        className="right"
+                        onClick={this.approveFeedback}
+                    >
+                        ✓
+                    </div>
+                </div>
             );
         }
+        console.log(toJS(temp));
+        result.push(<div key='1' className="feedbackContainer">{temp}</div>);
+
+        return result;
     }
 
     render() {
         const {
             title,
-            num,
             positive,
             negative,
-            checkbox,
             general,
             allFeedback,
         } = this.props.joinStore;
@@ -83,33 +82,9 @@ class Voting extends Component {
             <form className="home">
                 <h1 className="title">{title}</h1>
                 <p>Please vote for all feedback you agree with. If you dont agree press the X to remove from view.</p>  {/* Clarify wording! */}
-
-                {this.positiveFeedback(num, positive, data)}
-                {this.negativeFeedback(num, negative, data)}
-
-                {checkbox && this.generalFeedback(general, data)}
-
-                {
-                    //example of feedback voting box
-                }
-                <div className="feedbackContainer">
-                    <div className="feedback">
-                        <div className="left"> X</div>
-                        <p>feedback vote box demo!</p>
-                        <div className="right"> ✓</div>
-                    </div>
-                    <div className="feedback">
-                        <div className="left"> X</div>
-                        <p>feedback vote box demo!</p>
-                        <div className="right"> ✓</div>
-                    </div>
-                    <div className="feedback">
-                        <div className="left"> X</div>
-                        <p>feedback vote box demo!</p>
-                        <div className="right"> ✓</div>
-                    </div>
-                </div>
-
+                {this.renderFeedbackContainer(positive, data.positive)}
+                {this.renderFeedbackContainer(negative, data.negative)}
+                {general && this.renderFeedbackContainer(general, data.general)}
             </form>
         );
     }

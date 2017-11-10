@@ -71,11 +71,10 @@ class CreateStore {
         this.participants = message.data;
         break;
       case 'feedback':
-        this.feedback.positive.push(message.data.positive);
-        this.feedback.negative.push(message.data.negative);
+        this.feedback.positive.push(...message.data.positive);
+        this.feedback.negative.push(...message.data.negative);
         if (this.checkbox)
-          this.feedback.general.push(message.data.general);
-
+          this.feedback.general.push(...message.data.general);
         socket.send(toJS(this.feedback));
         break;
       default:

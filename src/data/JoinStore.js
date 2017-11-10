@@ -1,4 +1,4 @@
-import /*mobx,*/ { observable, computed, action, useStrict, toJS } from 'mobx';
+import /*mobx,*/ { observable, action, useStrict, toJS } from 'mobx';
 import socket from './SocketHandler';
 import Cookies from 'universal-cookie';
 
@@ -35,6 +35,12 @@ class JoinStore {
         }
     };
 
+    determinedFeedback = {
+        positive: [],
+        negative: [],
+        general: []
+    };
+
     @observable voting = {
         type: 'voting',
         data: {
@@ -61,7 +67,21 @@ class JoinStore {
                 this.configure(data);
                 break;
             case 'feedback':
-                this.allFeedback.data = data;
+                console.log(data);
+                let temp = {};
+                temp.positive = data.positive.map(item => {
+                    const determined = this.determinedFeedback[item.type].find(id => id === item.id);
+                    return { ...item, determined };
+                });
+                temp.negative = data.negative.map(item => {
+                    const determined = this.determinedFeedback[item.type].find(id => id === item.id);
+                    return { ...item, determined };
+                });
+                temp.general = data.general.map(item => {
+                    const determined = this.determinedFeedback[item.type].find(id => id === item.id);
+                    return { ...item, determined };
+                });
+                this.allFeedback.data = temp;
                 break;
             default:
                 console.log(data);
@@ -81,8 +101,8 @@ class JoinStore {
         this.negative = data.negative;
         this.general = data.general;
 
-        this.id = data.id;
-        cookies.set('id', data.id);
+        this.userId = data.userId;
+        cookies.set('userId', data.userId);
 
         this.generateFeedback('p', 'positive');
         this.generateFeedback('n', 'negative');
@@ -112,13 +132,21 @@ class JoinStore {
         }
     }
 
-    @computed get getEvaluation() {
-        return this.evaluation;
-    }
+    setDetermined = (item) => {
+        item.determined = true;
+        this.determinedFeedback[item.type].push(item.id);
+    };
 
-    @computed get data() {
-        return this.myFeedback.data;
-    }
+    @action dismissFeedback = (id, type) => {
+        let item = this.allFeedback.data[type].find(it => it.id === id);
+        this.setDetermined(item);
+    };
+
+    @action approveFeedback = (id, type) => {
+        let item = this.allFeedback.data[type].find(it => it.id === id);
+        this.voting.data[type].push({ id, userId: this.userId })
+        this.setDetermined(item);
+    };
 
     @action setFeedback = (e) => {
         let fb = this.myFeedback;
@@ -147,8 +175,8 @@ class JoinStore {
             type: 'join',
             code: this.joinCode,
         }
-        let id = cookies.get('id');
-        if (id !== undefined) join.id = cookies.get('id');
+        let userId = cookies.get('userId');
+        if (userId !== undefined) join.userId = userId;
         socket.send(join);
     }
 
