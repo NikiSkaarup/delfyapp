@@ -17,8 +17,13 @@ class CreateStore {
   @observable general = "";
   @observable joinCode = "";
 
-  @observable feedback = observable([]);
-  @observable participants = observable([]);
+  @observable feedback = {
+    type: 'feedback',
+    positive: [],
+    negative: [],
+    general: []
+  }
+  @observable participants = [];
 
   @computed get getEvaluation() {
     return this.evaluation;
@@ -66,12 +71,12 @@ class CreateStore {
         this.participants = message.data;
         break;
       case 'feedback':
-        this.feedback.push(message.data);
+        this.feedback.positive.push(message.data.positive);
+        this.feedback.negative.push(message.data.negative);
+        if (this.checkbox)
+          this.feedback.general.push(message.data.general);
 
-        socket.send({
-          type: 'feedback',
-          data: toJS(this.feedback)
-        });
+        socket.send(toJS(this.feedback));
         break;
       default:
         console.log(message);
@@ -97,9 +102,8 @@ class CreateStore {
       amount: this.num,
     }
 
-    if (this.checkbox) {
+    if (this.checkbox)
       host.general = this.general;
-    }
 
     socket.send(host);
   }

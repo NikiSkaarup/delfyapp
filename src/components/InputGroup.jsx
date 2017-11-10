@@ -5,6 +5,7 @@ class InputGroup extends Component {
     generateInput = (props) => {
         if (props.type !== 'textarea') {
             return (<input
+                data-type={props.dataType}
                 type={props.type}
                 name={props.id}
                 id={props.id}
@@ -13,6 +14,7 @@ class InputGroup extends Component {
                 value={props.value} />);
         } else {
             return (<textarea
+                data-type={props.dataType}
                 name={props.id}
                 id={props.id}
                 onChange={this.props.onChange}

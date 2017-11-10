@@ -36,6 +36,7 @@ class Feedback extends Component {
                 result.push(
                     <div key={(i + 1)}>
                         <InputGroup id={id}
+                            dataType="positive"
                             type="textarea"
                             onChange={this.changeFeedback}
                             value={data.val} />
@@ -59,6 +60,7 @@ class Feedback extends Component {
                 result.push(
                     <div key={(i + 1)}>
                         <InputGroup id={id}
+                            dataType="negative"
                             type="textarea"
                             onChange={this.changeFeedback}
                             value={data.val} />
@@ -80,6 +82,7 @@ class Feedback extends Component {
                 <div>
                     <h2 className="title q">{general}</h2>
                     <InputGroup id={id}
+                        dataType="general"
                         type="textarea"
                         onChange={this.changeFeedback}
                         value={data.val} />
@@ -94,19 +97,18 @@ class Feedback extends Component {
             num,
             positive,
             negative,
-            checkbox,
             general,
-            feedback,
+            myFeedback,
         } = this.props.joinStore;
-        const data = feedback.data;
+        const data = myFeedback.data;
         return (
             <form className="home">
                 <h1 className="title">{title}</h1>
 
-                {this.positiveFeedback(num, positive, data)}
-                {this.negativeFeedback(num, negative, data)}
+                {this.positiveFeedback(num, positive, data.positive)}
+                {this.negativeFeedback(num, negative, data.negative)}
 
-                {checkbox && this.generalFeedback(general, data)}
+                {general && this.generalFeedback(general, data.general)}
 
                 <button type="submit" onClick={this.submitFeedback}>Submit</button>
             </form>

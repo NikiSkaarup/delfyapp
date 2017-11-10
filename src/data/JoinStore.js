@@ -14,23 +14,36 @@ class JoinStore {
     @observable num = 1;
     @observable positive = "";
     @observable negative = "";
-    @observable checkbox = false;
     @observable general = "";
     @observable joinCode = "";
 
-    @observable feedback = {
+    @observable myFeedback = {
         type: 'feedback',
-        data: []
-    }
+        data: {
+            positive: [],
+            negative: [],
+            general: []
+        }
+    };
+
+    @observable allFeedback = {
+        type: 'feedback',
+        data: {
+            positive: [],
+            negative: [],
+            general: []
+        }
+    };
 
     @observable voting = {
         type: 'voting',
-        feedback: {
-            data: []
-        },
-        data: []
+        data: {
+            positive: [],
+            negative: [],
+            general: []
+        }
     };
-    @observable participants = observable([]);
+    @observable participants = [];
 
     constructor() {
         window.joinStore = this;
@@ -48,7 +61,7 @@ class JoinStore {
                 this.configure(data);
                 break;
             case 'feedback':
-                this.voting.feedback = data;
+                this.allFeedback.data = data;
                 break;
             default:
                 console.log(data);
@@ -66,7 +79,6 @@ class JoinStore {
         this.num = data.amount;
         this.positive = data.positive;
         this.negative = data.negative;
-        this.checkbox = data.general ? true : false;
         this.general = data.general;
 
         this.id = data.id;
@@ -74,13 +86,13 @@ class JoinStore {
 
         this.generateFeedback('p', 'positive');
         this.generateFeedback('n', 'negative');
-        if (this.checkbox) {
+        if (this.general) {
             let generalFB = {
                 id: 'general',
                 type: 'general',
                 val: '',
             };
-            this.feedback.data.push(generalFB);
+            this.myFeedback.data[generalFB.type].push(generalFB);
         }
     }
 
@@ -96,7 +108,7 @@ class JoinStore {
                 type: type,
                 val: '',
             };
-            this.feedback.data.push(fb);
+            this.myFeedback.data[type].push(fb);
         }
     }
 
@@ -105,15 +117,17 @@ class JoinStore {
     }
 
     @computed get data() {
-        return this.feedback.data;
+        return this.myFeedback.data;
     }
 
     @action setFeedback = (e) => {
-        let fb = this.feedback;
-        let data = fb.data.find(el => el.id === e.target.id);
+        let fb = this.myFeedback;
+        let data = fb.data[e.target.getAttribute('data-type')]
+            .find(el => el.id === e.target.id);
+
         if (data) {
             data.val = e.target.value;
-            this.feedback = fb;
+            this.myFeedback = fb;
         }
     }
 
@@ -143,8 +157,8 @@ class JoinStore {
      * can pass on the data for the host
      */
     submitFeedback = () => {
-        console.log(toJS(this.feedback));
-        socket.send(toJS(this.feedback));
+        console.log(toJS(this.myFeedback));
+        socket.send(toJS(this.myFeedback));
     }
 
 }
