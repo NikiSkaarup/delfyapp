@@ -189,6 +189,42 @@ class CreateStore {
       this.results.general = [...this.feedback.general];
     }
   }
+
+  @action sort = (nameOfArrayToSort) => {
+    console.log('fuck');
+    switch (nameOfArrayToSort) {
+      case 'positive':
+        this.results.positive = this.results.positive.sort((b, a) => {
+          if (a.votes !== undefined && b.votes !== undefined)
+            return a.votes.length - b.votes.length;
+          if (a.votes !== undefined) return 1;
+          if (b.votes !== undefined) return -1;
+          return 0;
+        });
+        break;
+      case 'negative':
+        this.results.negative = this.results.negative.sort((b, a) => {
+          if (a.votes !== undefined && b.votes !== undefined)
+            return a.votes.length - b.votes.length;
+          if (a.votes !== undefined) return 1;
+          if (b.votes !== undefined) return -1;
+          return 0;
+        });
+        break;
+      case 'general':
+        this.results.general = this.results.general.sort((b, a) => {
+          if (a.votes !== undefined && b.votes !== undefined)
+            return a.votes.length - b.votes.length;
+          if (a.votes !== undefined) return 1;
+          if (b.votes !== undefined) return -1;
+          return 0;
+        });
+        break;
+      default:
+        break;
+    }
+  }
+
 }
 
 export default new CreateStore();

@@ -1,0 +1,29 @@
+.resultTable {
+    border-collapse: collapse;
+    background: #fafafa;
+    color: #222;
+    width: 100%;
+    margin-bottom: 1rem;
+    &>thead {
+        &>tr {
+            &>th {
+                border: 1px solid #222;
+            }
+        }
+    }
+    &>tbody {
+        &>tr {
+            &:nth-child(odd) {
+                background-color: #e9e9e9;
+            }
+            &>td {
+                background-color: transparent;
+                border: 1px solid #222;
+            }
+            &>td:nth-of-type(2) {
+                min-width: 4rem;
+                width: 10%;
+            }
+        }
+    }
+}

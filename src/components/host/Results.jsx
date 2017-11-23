@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react';
 import { toJS } from 'mobx';
 import '../../css/Home.css';
 import '../../css/Voting.css';
+import '../../css/Tables.css';
 
 @inject('createStore')
 @observer
@@ -48,7 +49,7 @@ class Results extends Component {
             results,
         } = this.props.createStore;
         return (
-            <div >
+            <div className="home">
                 <h1 className="title">{title}</h1>
                 <p>Voting results</p>
                 {this.renderResultContainer(positive, results.positive)}

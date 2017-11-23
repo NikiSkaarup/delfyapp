@@ -10,6 +10,9 @@ class Monitor extends Component {
     setFeedbackDone = (event) => this.props.createStore.setFeedbackDone();
     endEvaluation = () => {
         // end evalution and see results!
+        this.props.createStore.sort('positive');
+        this.props.createStore.sort('negative');
+        this.props.createStore.sort('general');
         this.props.history.push('/results');
     };
 
@@ -22,7 +25,7 @@ class Monitor extends Component {
         } = this.props.createStore;
 
         return (
-            <div>
+            <div className="home">
                 <h1 className="title">{title}</h1>
                 <h2 className="title code">{joinCode}</h2>
                 <p className="subtitle">Enter this code to join evaluation.</p>

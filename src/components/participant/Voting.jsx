@@ -17,7 +17,6 @@ class Voting extends Component {
         //this.props.history.push('/voting');
     }
 
-
     dismissFeedback = (e) => {
         const id = e.target.getAttribute('data-id');
         const type = e.target.getAttribute('data-type');
@@ -79,13 +78,13 @@ class Voting extends Component {
         } = this.props.joinStore;
         const data = allFeedback.data;
         return (
-            <form className="home">
+            <div className="home">
                 <h1 className="title">{title}</h1>
                 <p>Please vote for all feedback you agree with. If you dont agree press the X to remove from view.</p>  {/* Clarify wording! */}
                 {this.renderFeedbackContainer(positive, data.positive)}
                 {this.renderFeedbackContainer(negative, data.negative)}
                 {general && this.renderFeedbackContainer(general, data.general)}
-            </form>
+            </div>
         );
     }
 }
