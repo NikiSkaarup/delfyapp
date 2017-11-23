@@ -107,21 +107,12 @@ class CreateStore {
    * }
    */
   votingHandler = (message) => {
-    for (let i = 0; i < message.data.positive; i++) {
-      this.findAndAssignVote(this.results.positive,
-        message.data.positive[i]);
-    }
-    for (let i = 0; i < message.data.negative; i++) {
-      this.findAndAssignVote(this.results.negative,
-        message.data.negative[i]);
-    }
-    for (let i = 0; i < message.data.general; i++) {
-      this.findAndAssignVote(this.results.general,
-        message.data.general[i]);
-    }
+    message.data.positive.forEach((item) => this.findAndAssignVote(this.results.positive, item));
+    message.data.negative.forEach((item) => this.findAndAssignVote(this.results.negative, item));
+    message.data.general.forEach((item) => this.findAndAssignVote(this.results.general, item));
     this.votesRecieved++;
     if (this.votesRecieved === this.feedbackRecieved && this.feedbackDone) {
-      // dune?
+      console.log('dune!');// TODO: figure out what to do next.
     }
   }
 

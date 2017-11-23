@@ -18,7 +18,7 @@ class Results extends Component {
             temp.push(
                 <tr key={i}>
                     <td>{item.val}</td>
-                    <td>{item.votes && item.votes.length}</td>
+                    <td>{item.votes && item.votes.length}{!item.votes && 0}</td>
                 </tr>
             );
         }

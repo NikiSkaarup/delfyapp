@@ -53,6 +53,7 @@ class JoinStore {
     @observable participants = [];
 
     @observable feedbackDone = false;
+    votesSent = false;
     doneCheckInterval = 0;
 
     constructor() {
@@ -63,6 +64,10 @@ class JoinStore {
     }
 
     checkVotingDone = () => {
+        if (this.votesSent) {
+            clearInterval(this.checkVotingDone);
+            return;
+        }
         // return if NOT done receiving feedback
         if (!this.feedbackDone) return;
         // return if NOT done voting!
@@ -74,6 +79,8 @@ class JoinStore {
             !== this.determinedFeedback.general.length) return;
         // do something now.
         socket.send(this.voting);
+        this.votesSent = true;
+
         clearInterval(this.checkVotingDone);
     };
 
