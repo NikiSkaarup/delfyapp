@@ -1,58 +1,51 @@
-
 .feedbackContainer {
-  display: grid;
-  grid-template-columns: repeat(3, 31%);
-  grid-template-columns: repeat(3, calc(33.337% - 1rem));
-  justify-content: space-between;	
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-gap: 1rem;
+    width: 100%;
 }
 
 .feedback {
-  position: relative;
-  min-width: 10rem;
-  min-height: 2rem;
-  margin-bottom: 1rem;
-  font-size: 1.2rem;
-  padding: 1rem;
-  background-color: #fafafa;
-  color: #292929;
-
-  .left, .right {
-    display: flex;
-    line-height: 1rem;
-    top: 0;
-    cursor: pointer;
-    height: 100%;
-    position: absolute;
-    z-index: 10;
-    width: 20%;
-    min-width: 1.2rem;
-    transition: opacity .2s;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    text-shadow: 0 0 .1rem black;
-    font-size: 1.4rem;
-    color: #fafafa;
-    user-select: none;
-
-    &:hover {
-      opacity: 1;
+    position: relative;
+    min-width: 10rem;
+    min-height: 2rem;
+    font-size: 1.2rem;
+    padding: 1rem;
+    background-color: #fafafa;
+    color: #292929;
+    .left,
+    .right {
+        display: flex;
+        line-height: 1rem;
+        top: 0;
+        cursor: pointer;
+        height: 100%;
+        position: absolute;
+        z-index: 10;
+        width: 30%;
+        min-width: 1.2rem;
+        transition: opacity .2s;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        text-shadow: 0 0 .1rem black;
+        font-size: 1.4rem;
+        color: #fafafa;
+        user-select: none;
+        &:hover {
+            opacity: 1;
+        }
     }
-  }
-
-  .left {
-    left: 0;
-    background-color: rgba(175, 25, 25, 0.75);
-  }
-  
-  .right {
-    right: 0;
-    background-color: rgba(25, 175, 25, 0.75);
-  }
-  
-  &:hover .left, &:hover .right {
-      opacity: 1;
-  }
-
+    .left {
+        left: 0;
+        background-color: rgba(175, 25, 25, 0.75);
+    }
+    .right {
+        right: 0;
+        background-color: rgba(25, 175, 25, 0.75);
+    }
+    &:hover .left,
+    &:hover .right {
+        opacity: 1;
+    }
 }
-
