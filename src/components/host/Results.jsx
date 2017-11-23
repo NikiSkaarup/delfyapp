@@ -13,14 +13,12 @@ class Results extends Component {
         let temp = [];
 
         for (let i = 0; i < d.length; i++) {
-            console.log('...');
             const item = d[i];
             if (item.determined !== undefined) continue;
-            console.log(`${title} - ${item}`);
             temp.push(
                 <tr key={i}>
                     <td>{item.val}</td>
-                    <td>{item.votes.length}</td>
+                    <td>{item.votes && item.votes.length}</td>
                 </tr>
             );
         }
@@ -52,7 +50,7 @@ class Results extends Component {
         return (
             <div >
                 <h1 className="title">{title}</h1>
-                <p>Voting results</p>  
+                <p>Voting results</p>
                 {this.renderResultContainer(positive, results.positive)}
                 {this.renderResultContainer(negative, results.negative)}
                 {general && this.renderResultContainer(general, results.general)}
