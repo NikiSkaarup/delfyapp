@@ -17,6 +17,8 @@ class CreateStore {
   @observable general = "";
   @observable joinCode = "";
 
+  @observable feedbackDone = false;
+  @observable feedbackRecieved = 0;
   @observable feedback = {
     type: 'feedback',
     positive: [],
@@ -24,6 +26,15 @@ class CreateStore {
     general: []
   }
   @observable participants = [];
+
+
+  @observable votesRecieved = 0;
+  @observable results = {
+    type: 'results',
+    positive: [],
+    negative: [],
+    general: []
+  }
 
   @computed get getEvaluation() {
     return this.evaluation;
@@ -71,11 +82,10 @@ class CreateStore {
         this.participants = message.data;
         break;
       case 'feedback':
-        this.feedback.positive.push(...message.data.positive);
-        this.feedback.negative.push(...message.data.negative);
-        if (this.checkbox)
-          this.feedback.general.push(...message.data.general);
-        socket.send(toJS(this.feedback));
+        this.feedbackHandler(message);
+        break;
+      case 'voting':
+        this.votingHandler(message);
         break;
       default:
         console.log(message);
@@ -83,6 +93,75 @@ class CreateStore {
     }
   }
 
+
+
+  /**
+   * expected data format received
+   * {
+   *  type: 'voting',
+   *  data: {
+   *    positive: [{id, userId}],
+   *    negative: [{id, userId}],
+   *    general: [{id, userId}]
+   *  }
+   * }
+   */
+  votingHandler = (message) => {
+    for (let i = 0; i < message.data.positive; i++) {
+      this.findAndAssignVote(this.results.positive,
+        message.data.positive[i]);
+    }
+    for (let i = 0; i < message.data.negative; i++) {
+      this.findAndAssignVote(this.results.negative,
+        message.data.negative[i]);
+    }
+    for (let i = 0; i < message.data.general; i++) {
+      this.findAndAssignVote(this.results.general,
+        message.data.general[i]);
+    }
+    this.votesRecieved++;
+    if (this.votesRecieved === this.feedbackRecieved && this.feedbackDone) {
+      // dune?
+    }
+  }
+
+  /**
+   *
+   * if this is super slow change to use key value rather than arrays
+   * for both the array and fb.votes rather than nested arrays have
+   * nested key value stores aka objects.
+   * 
+   * @param {[]} arr
+   * @param {{id, userId}} vote 
+   */
+  findAndAssignVote(arr, vote) {
+    arr.forEach((fb) => {
+      if (fb.id === vote.id) {
+        if (fb.votes === undefined) fb.votes = [];
+        const res = fb.votes.find((userId) => userId === vote.userId);
+        if (res === undefined) fb.votes.push(vote.userId);
+      }
+    });
+  }
+
+  feedbackHandler = (message) => {
+    this.feedback.positive.push(...message.data.positive);
+    this.feedback.negative.push(...message.data.negative);
+    if (this.checkbox)
+      this.feedback.general.push(...message.data.general);
+    socket.send(toJS(this.feedback));
+    this.feedbackRecieved++;
+    if (!this.feedbackDone && this.feedbackRecieved === this.participants.length && this.participants.length > 5) {
+      this.feedbackDone = true;
+      socket.send({
+        type: 'feedback_done',
+        data: this.feedbackDone
+      });
+      this.results.positive = [...this.feedback.positive];
+      this.results.negative = [...this.feedback.negative];
+      this.results.general = [...this.feedback.general];
+    }
+  }
   /**
    * subsribes to the SocketHandler
    * sets up the configuration and
@@ -105,6 +184,19 @@ class CreateStore {
       host.general = this.general;
 
     socket.send(host);
+  }
+
+  @action setFeedbackDone = () => {
+    if (!this.feedbackDone) {
+      this.feedbackDone = true;
+      socket.send({
+        type: 'feedback_done',
+        data: this.feedbackDone
+      });
+      this.results.positive = [...this.feedback.positive];
+      this.results.negative = [...this.feedback.negative];
+      this.results.general = [...this.feedback.general];
+    }
   }
 }
 

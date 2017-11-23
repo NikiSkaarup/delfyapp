@@ -7,12 +7,10 @@ import '../../css/Host.css';
 @observer
 class Create extends Component {
 
-    
-    createEvaluation = (event) => {
-        event.preventDefault();
-        //CreateStore.updateEvaluation(this.state.evaluation);
-        console.log(this.props.createStore);
-    }
+    setFeedbackDone = (event) => this.props.createStore.setFeedbackDone();
+    endEvaluation = () => {
+        // end evalution and see results!
+    };
 
     render() {
         const {
@@ -23,7 +21,7 @@ class Create extends Component {
         } = this.props.createStore;
 
         return (
-            <form className="home">
+            <div>
                 <h1 className="title">{title}</h1>
                 <h2 className="title code">{joinCode}</h2>
                 <p className="subtitle">Enter this code to join evaluation.</p>
@@ -38,8 +36,9 @@ class Create extends Component {
                     </div>
                 </div>
 
-                <button type="submit" onClick={this.createEvaluation}>See results</button>
-            </form>
+                <button onClick={this.setFeedbackDone}>Stop receiving feedback(shouldn't be needed.)</button>
+                <button onClick={this.endEvaluation}>End evaluation and see results</button>
+            </div>
         );
     }
 }

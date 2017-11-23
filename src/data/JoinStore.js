@@ -1,6 +1,7 @@
 import /*mobx,*/ { observable, action, useStrict, toJS } from 'mobx';
 import socket from './SocketHandler';
 import Cookies from 'universal-cookie';
+import { setInterval } from 'core-js/library/web/timers';
 
 useStrict(true);
 const cookies = new Cookies();
@@ -51,11 +52,30 @@ class JoinStore {
     };
     @observable participants = [];
 
+    @observable feedbackDone = false;
+    doneCheckInterval = 0;
+
     constructor() {
         window.joinStore = this;
         // set participants to 0 so we don't temporarily have an empty array of 1000 elements.
         this.participants.length = 0;
+        this.doneCheckInterval = setInterval(this.checkVotingDone, 1000);
     }
+
+    checkVotingDone = () => {
+        // return if NOT done receiving feedback
+        if (!this.feedbackDone) return;
+        // return if NOT done voting!
+        if (this.allFeedback.data.positive.length
+            !== this.determinedFeedback.positive.length) return;
+        if (this.allFeedback.data.negative.length
+            !== this.determinedFeedback.negative.length) return;
+        if (this.allFeedback.data.general.length
+            !== this.determinedFeedback.general.length) return;
+        // do something now.
+        socket.send(this.voting);
+        clearInterval(this.checkVotingDone);
+    };
 
     /**
      * function used for subscribing to the SocketHandler
@@ -67,21 +87,10 @@ class JoinStore {
                 this.configure(data);
                 break;
             case 'feedback':
-                console.log(data);
-                let temp = {};
-                temp.positive = data.positive.map(item => {
-                    const determined = this.determinedFeedback[item.type].find(id => id === item.id);
-                    return { ...item, determined };
-                });
-                temp.negative = data.negative.map(item => {
-                    const determined = this.determinedFeedback[item.type].find(id => id === item.id);
-                    return { ...item, determined };
-                });
-                temp.general = data.general.map(item => {
-                    const determined = this.determinedFeedback[item.type].find(id => id === item.id);
-                    return { ...item, determined };
-                });
-                this.allFeedback.data = temp;
+                this.feedbackHandler(data);
+                break;
+            case 'feedback_done':
+                this.feedbackDone = data.data;
                 break;
             default:
                 console.log(data);
@@ -89,12 +98,30 @@ class JoinStore {
         }
     }
 
+    feedbackHandler = (data) => {
+        console.log(data);
+        let temp = {};
+        temp.positive = data.positive.map(item => {
+            const determined = this.determinedFeedback[item.type].find(id => id === item.id);
+            return { ...item, determined };
+        });
+        temp.negative = data.negative.map(item => {
+            const determined = this.determinedFeedback[item.type].find(id => id === item.id);
+            return { ...item, determined };
+        });
+        temp.general = data.general.map(item => {
+            const determined = this.determinedFeedback[item.type].find(id => id === item.id);
+            return { ...item, determined };
+        });
+        this.allFeedback.data = temp;
+    }
+
     /**
      * after joining using a join code
      * configure the client based on the
      * host setup config
      */
-    @action configure = (data) => {
+    configure = (data) => {
         this.title = data.title;
         this.num = data.amount;
         this.positive = data.positive;
@@ -144,7 +171,7 @@ class JoinStore {
 
     @action approveFeedback = (id, type) => {
         let item = this.allFeedback.data[type].find(it => it.id === id);
-        this.voting.data[type].push({ id, userId: this.userId })
+        this.voting.data[type].push({ id, userId: this.userId });
         this.setDetermined(item);
     };
 
