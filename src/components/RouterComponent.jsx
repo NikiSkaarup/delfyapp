@@ -5,6 +5,7 @@ import Header from './Header';
 import Home from './home/Home';
 import Create from './host/Create';
 import Monitor from './host/Monitor';
+import Results from './host/Results';
 import Join from './participant/Join';
 import Feedback from './participant/Feedback';
 import Voting from './participant/Voting';
@@ -27,6 +28,7 @@ class RouterComponent extends Component {
                             <Route exact path="/" component={Home} />
                             <Route path="/create" component={Create} />
                             <Route path="/monitor" component={Monitor} />
+                            <Route path="/results" component={Results} />
                             <Route path="/join" component={Join} />
                             <Route path="/feedback" component={Feedback} />
                             <Route path="/voting" component={Voting} />

@@ -5,11 +5,12 @@ import '../../css/Host.css';
 
 @inject('createStore')
 @observer
-class Create extends Component {
+class Monitor extends Component {
 
     setFeedbackDone = (event) => this.props.createStore.setFeedbackDone();
     endEvaluation = () => {
         // end evalution and see results!
+        this.props.history.push('/results');
     };
 
     render() {
@@ -43,4 +44,4 @@ class Create extends Component {
     }
 }
 
-export default Create;
+export default Monitor;
