@@ -33,10 +33,13 @@ class Feedback extends Component {
         for (let i = 0; i < numToRender; i++) {
             let id = `p-${i}`;
             let data = d.find((el) => el.id === id);
+            let opts = {};
+            if (i === 0) opts['autoFocus'] = 'autofucus';
             if (data) {
                 result.push(
                     <div key={(i + 1)}>
                         <InputGroup id={id}
+                            {...opts}
                             dataType="positive"
                             type="textarea"
                             onChange={this.changeFeedback}

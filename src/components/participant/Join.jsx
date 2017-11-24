@@ -38,7 +38,7 @@ class Join extends Component {
                 <div className="purdy_box">
                     <InputGroup id="joinCode"
                         type="text"
-                        title="joinCode"
+                        autoFocus="autofocus"
                         onChange={this.changeCode}
                         value={joinCode} />
 

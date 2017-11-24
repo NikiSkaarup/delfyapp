@@ -72,7 +72,7 @@ class Voting extends Component {
         return (
             <div className="home">
                 <h1 className="title">{title}</h1>
-                <p>Please vote for all feedback you agree with. If you dont agree press the X to remove from view.</p>  {/* Clarify wording! */}
+                <p style={{ paddingBottom: "1rem" }}>Please vote for all feedback you agree with. If you dont agree press the X to remove from view.</p>  {/* Clarify wording! */}
                 {this.renderFeedbackContainer(positive, data.positive)}
                 {this.renderFeedbackContainer(negative, data.negative)}
                 {general && this.renderFeedbackContainer(general, data.general)}

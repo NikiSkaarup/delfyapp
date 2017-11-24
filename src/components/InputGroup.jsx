@@ -10,6 +10,7 @@ class InputGroup extends Component {
                 name={props.id}
                 id={props.id}
                 onChange={this.props.onChange}
+                autoFocus={props.autoFocus}
                 placeholder={props.title}
                 value={props.value} />);
         } else {
@@ -18,6 +19,7 @@ class InputGroup extends Component {
                 name={props.id}
                 id={props.id}
                 onChange={this.props.onChange}
+                autoFocus={props.autoFocus}
                 placeholder={props.title}
                 value={props.value} />)
         }

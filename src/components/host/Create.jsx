@@ -71,6 +71,7 @@ class Create extends Component {
                     <InputGroup id="title"
                         type="text"
                         title="Title"
+                        autoFocus="autofocus"
                         onChange={this.changeTitle}
                         value={title} />
 

@@ -51,7 +51,7 @@ class Results extends Component {
         return (
             <div className="home">
                 <h1 className="title">{title}</h1>
-                <p>Voting results</p>
+                <h2 className="title q">Voting results</h2>
                 {this.renderResultContainer(positive, results.positive)}
                 {this.renderResultContainer(negative, results.negative)}
                 {general && this.renderResultContainer(general, results.general)}
