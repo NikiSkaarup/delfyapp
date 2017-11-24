@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import '../../css/Home.css';
+import '../../css/PurdyBox.css';
 import InputGroup from '../InputGroup';
 
 @inject('createStore')
@@ -65,43 +66,47 @@ class Create extends Component {
                 <h1 className="title">Create new evaluation</h1>
                 <p className="subtitle">Fill out the form below and then we will<br />create the evaluation template for you.</p>
 
-                <InputGroup id="title"
-                    type="text"
-                    title="Title"
-                    onChange={this.changeTitle}
-                    value={title} />
+                <div className="purdy_box">
 
-                <InputGroup id="num"
-                    type="number"
-                    title="Feedback per question"
-                    onChange={this.changeNum}
-                    value={num} />
+                    <InputGroup id="title"
+                        type="text"
+                        title="Title"
+                        onChange={this.changeTitle}
+                        value={title} />
 
-                <InputGroup id="positive"
-                    type="text"
-                    title="Positive feedback"
-                    onChange={this.changePositive}
-                    value={positive} />
+                    <InputGroup id="num"
+                        type="number"
+                        title="Feedback per question"
+                        onChange={this.changeNum}
+                        value={num} />
 
-                <InputGroup id="negative"
-                    type="text"
-                    title="Negative feedback"
-                    onChange={this.changeNegative}
-                    value={negative} />
+                    <InputGroup id="positive"
+                        type="text"
+                        title="Positive feedback"
+                        onChange={this.changePositive}
+                        value={positive} />
 
-                <div className="input-group">
-                    <label className='nosel' htmlFor="checkbox">Enable general feedback</label>
-                    <input
-                        type="checkbox"
-                        name="checkbox"
-                        id="checkbox"
-                        onChange={this.changeCheckbox}
-                        value={checkbox} />
+                    <InputGroup id="negative"
+                        type="text"
+                        title="Negative feedback"
+                        onChange={this.changeNegative}
+                        value={negative} />
+
+                    <div className="input-group">
+                        <label className='nosel' htmlFor="checkbox">Enable general feedback</label>
+                        <input
+                            type="checkbox"
+                            name="checkbox"
+                            id="checkbox"
+                            onChange={this.changeCheckbox}
+                            value={checkbox} />
+                    </div>
+
+                    {this.generalFeedback(checkbox, general)}
+
+                    <button type="submit" onClick={this.createEvaluation}>Create</button>
+
                 </div>
-
-                {this.generalFeedback(checkbox, general)}
-
-                <button type="submit" onClick={this.createEvaluation}>Create</button>
             </form>
         );
     }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import '../../css/Home.css';
+import '../../css/PurdyBox.css';
 import InputGroup from '../InputGroup';
 
 @inject('joinStore')
@@ -34,13 +35,15 @@ class Join extends Component {
                 <h1 className="title">Join evaluation</h1>
                 <p className="subtitle">Enter the code here to join.</p>
 
-                <InputGroup id="joinCode"
-                    type="text"
-                    title="joinCode"
-                    onChange={this.changeCode}
-                    value={joinCode} />
+                <div className="purdy_box">
+                    <InputGroup id="joinCode"
+                        type="text"
+                        title="joinCode"
+                        onChange={this.changeCode}
+                        value={joinCode} />
 
-                <button type="submit" onClick={this.joinEvaluation}>Join</button>
+                    <button type="submit" onClick={this.joinEvaluation}>Join</button>
+                </div>
             </form>
         );
     }

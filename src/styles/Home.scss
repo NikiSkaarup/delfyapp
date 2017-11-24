@@ -17,6 +17,9 @@ $accent: #2C6A95;
         font-weight: inherit;
         color: $foreground;
         margin-bottom: 1rem;
+        &.q {
+            font-size: 1.5rem;
+        }
     }
     .subtitle {
         margin-bottom: 1rem;

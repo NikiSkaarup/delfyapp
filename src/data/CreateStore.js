@@ -18,7 +18,7 @@ class CreateStore {
   @observable joinCode = "";
 
   @observable feedbackDone = false;
-  @observable feedbackRecieved = 0;
+  @observable feedbackReceived = 0;
   @observable feedback = {
     type: 'feedback',
     positive: [],
@@ -28,7 +28,7 @@ class CreateStore {
   @observable participants = [];
 
 
-  @observable votesRecieved = 0;
+  @observable votesReceived = 0;
   @observable results = {
     type: 'results',
     positive: [],
@@ -110,8 +110,8 @@ class CreateStore {
     message.data.positive.forEach((item) => this.findAndAssignVote(this.results.positive, item));
     message.data.negative.forEach((item) => this.findAndAssignVote(this.results.negative, item));
     message.data.general.forEach((item) => this.findAndAssignVote(this.results.general, item));
-    this.votesRecieved++;
-    if (this.votesRecieved === this.feedbackRecieved && this.feedbackDone) {
+    this.votesReceived++;
+    if (this.votesReceived === this.feedbackReceived && this.feedbackDone) {
       console.log('dune!');// TODO: figure out what to do next.
     }
   }
@@ -141,8 +141,8 @@ class CreateStore {
     if (this.checkbox)
       this.feedback.general.push(...message.data.general);
     socket.send(toJS(this.feedback));
-    this.feedbackRecieved++;
-    if (!this.feedbackDone && this.feedbackRecieved === this.participants.length && this.participants.length > 5) {
+    this.feedbackReceived++;
+    if (!this.feedbackDone && this.feedbackReceived === this.participants.length && this.participants.length > 5) {
       this.feedbackDone = true;
       socket.send({
         type: 'feedback_done',

@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import '../../css/Home.css';
 import '../../css/Host.css';
+import '../../css/PurdyBox.css';
 
 @inject('createStore')
 @observer
 class Monitor extends Component {
 
-    setFeedbackDone = (event) => this.props.createStore.setFeedbackDone();
+    setFeedbackDone = () => this.props.createStore.setFeedbackDone();
     endEvaluation = () => {
         // end evalution and see results!
         this.props.createStore.sort('positive');
@@ -20,13 +21,14 @@ class Monitor extends Component {
         const {
             title,
             participants,
-            feedback,
+            feedbackReceived,
             joinCode
         } = this.props.createStore;
 
         return (
             <div className="home">
                 <h1 className="title">{title}</h1>
+                <h2 className="title q">go to https://delfy.skaarup.io</h2>
                 <h2 className="title code">{joinCode}</h2>
                 <p className="subtitle">Enter this code to join evaluation.</p>
                 <div className="monitor-wrapper">
@@ -36,12 +38,16 @@ class Monitor extends Component {
                     </div>
                     <div>
                         <h3>Feedback Received</h3>
-                        <div>{feedback.length}</div>
+                        <div>{feedbackReceived}</div>
                     </div>
                 </div>
 
-                <button onClick={this.setFeedbackDone}>Stop receiving feedback(shouldn't be needed.)</button>
-                <button onClick={this.endEvaluation}>End evaluation and see results</button>
+                <div className="purdy_box">
+                    click me first
+                    <button onClick={this.setFeedbackDone}>Stop receiving feedback</button>
+                    click me second
+                    <button onClick={this.endEvaluation}>End evaluation and see results</button>
+                </div>
             </div>
         );
     }

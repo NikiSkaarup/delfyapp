@@ -9,14 +9,6 @@ import '../../css/Voting.css';
 class Voting extends Component {
     changeFeedback = e => this.props.joinStore.setFeedback(e);
 
-    submitFeedback = (e) => {
-        e.preventDefault();
-
-        console.log(this.props.joinStore);
-        //this.props.joinStore.submitFeedback();
-        //this.props.history.push('/voting');
-    }
-
     dismissFeedback = (e) => {
         const id = e.target.getAttribute('data-id');
         const type = e.target.getAttribute('data-type');

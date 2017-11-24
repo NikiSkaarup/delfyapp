@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import '../../css/Home.css';
+import '../../css/PurdyBox.css';
 import InputGroup from '../InputGroup';
 
 @inject('joinStore')
@@ -105,12 +106,14 @@ class Feedback extends Component {
             <form className="home">
                 <h1 className="title">{title}</h1>
 
-                {this.positiveFeedback(num, positive, data.positive)}
-                {this.negativeFeedback(num, negative, data.negative)}
+                <div className="purdy_box">
+                    {this.positiveFeedback(num, positive, data.positive)}
+                    {this.negativeFeedback(num, negative, data.negative)}
 
-                {general && this.generalFeedback(general, data.general)}
+                    {general && this.generalFeedback(general, data.general)}
 
-                <button type="submit" onClick={this.submitFeedback}>Submit</button>
+                    <button type="submit" onClick={this.submitFeedback}>Submit</button>
+                </div>
             </form>
         );
     }
