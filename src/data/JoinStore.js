@@ -17,6 +17,7 @@ class JoinStore {
     @observable negative = "";
     @observable general = "";
     @observable joinCode = "";
+    @observable userId = "";
 
     @observable myFeedback = {
         type: 'feedback',
@@ -53,7 +54,7 @@ class JoinStore {
     @observable participants = [];
 
     @observable feedbackDone = false;
-    votesSent = false;
+    @observable votesSent = false;
     doneCheckInterval = 0;
 
     constructor() {
@@ -63,7 +64,7 @@ class JoinStore {
         this.doneCheckInterval = setInterval(this.checkVotingDone, 1000);
     }
 
-    checkVotingDone = () => {
+    @action checkVotingDone = () => {
         if (this.votesSent) {
             clearInterval(this.doneCheckInterval);
             return;

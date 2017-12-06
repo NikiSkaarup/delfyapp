@@ -22,13 +22,21 @@ class Join extends Component {
         //CreateStore.updateEvaluation(this.state.evaluation);
         console.log(this.props.joinStore);
         this.props.joinStore.joinHost();
-        this.props.history.push('/feedback');
+
     }
+
+
 
     render() {
         const {
-            joinCode
+            joinCode,
+            userId
         } = this.props.joinStore;
+
+        if (userId !== '') {
+            setTimeout(() =>
+                this.props.history.push('/feedback'), 0);
+        }
 
         return (
             <form className="home">

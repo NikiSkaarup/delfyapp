@@ -67,16 +67,28 @@ class Voting extends Component {
             negative,
             general,
             allFeedback,
+            votesSent
         } = this.props.joinStore;
         const data = allFeedback.data;
-        return (
-            <div className="home">
+        return (<div className="home">
+            {(!votesSent) && (<div>
                 <h1 className="title">{title}</h1>
-                <p style={{ paddingBottom: "1rem" }}>Please vote for all feedback you agree with. If you dont agree press the X to remove from view.</p>  {/* Clarify wording! */}
+                <p style={{ paddingBottom: "1rem" }}>Please vote for all feedback you agree with.
+                If you dont agree press the X to remove from view.</p>
                 {this.renderFeedbackContainer(positive, data.positive)}
                 {this.renderFeedbackContainer(negative, data.negative)}
                 {general && this.renderFeedbackContainer(general, data.general)}
-            </div>
+            </div>)
+            }
+            {(votesSent) && (<div>
+                <h1 className="title">{title}</h1>
+                <p style={{ paddingBottom: "1rem" }}>Your voting is done.
+                The creator of the evaluation will display the results when everyone is done voting.</p>
+                <p style={{ paddingBottom: "1rem" }}>
+                    Thank you for using Delfy!</p>
+            </div>)
+            }
+        </div>
         );
     }
 }
