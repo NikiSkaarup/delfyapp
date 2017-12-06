@@ -65,7 +65,7 @@ class JoinStore {
 
     checkVotingDone = () => {
         if (this.votesSent) {
-            clearInterval(this.checkVotingDone);
+            clearInterval(this.doneCheckInterval);
             return;
         }
         // return if NOT done receiving feedback
@@ -81,7 +81,7 @@ class JoinStore {
         socket.send(this.voting);
         this.votesSent = true;
 
-        clearInterval(this.checkVotingDone);
+        clearInterval(this.doneCheckInterval);
     };
 
     /**
