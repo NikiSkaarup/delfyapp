@@ -54,7 +54,7 @@ class JoinStore {
     @observable participants = [];
 
     @observable feedbackDone = false;
-    votesSent = false;
+    @observable votesSent = false;
     doneCheckInterval = 0;
 
     constructor() {
@@ -64,7 +64,7 @@ class JoinStore {
         this.doneCheckInterval = setInterval(this.checkVotingDone, 1000);
     }
 
-    checkVotingDone = () => {
+    @action checkVotingDone = () => {
         if (this.votesSent) {
             clearInterval(this.checkVotingDone);
             return;
