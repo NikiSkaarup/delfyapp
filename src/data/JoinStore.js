@@ -17,6 +17,7 @@ class JoinStore {
     @observable negative = "";
     @observable general = "";
     @observable joinCode = "";
+    @observable userId = "";
 
     @observable myFeedback = {
         type: 'feedback',
