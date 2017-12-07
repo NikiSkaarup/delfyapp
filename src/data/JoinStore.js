@@ -144,6 +144,7 @@ class JoinStore {
         if (this.general) {
             let generalFB = {
                 id: 'general',
+                userId: this.userId,
                 type: 'general',
                 val: '',
             };
@@ -160,6 +161,7 @@ class JoinStore {
             let id = `${baseid}-${i}`;
             let fb = {
                 id: id,
+                userId: this.userId,
                 type: type,
                 val: '',
             };
