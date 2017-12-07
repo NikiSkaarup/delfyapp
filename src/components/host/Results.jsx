@@ -47,11 +47,13 @@ class Results extends Component {
             negative,
             general,
             results,
+            store,
         } = this.props.createStore;
         return (
             <div className="home">
                 <h1 className="title">{title}</h1>
                 <h2 className="title q">Voting results</h2>
+                <button onClick={store} >Store Results</button>
                 {this.renderResultContainer(positive, results.positive)}
                 {this.renderResultContainer(negative, results.negative)}
                 {general && this.renderResultContainer(general, results.general)}

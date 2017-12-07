@@ -225,6 +225,15 @@ class CreateStore {
     }
   }
 
+  store = () => {
+    const temp = {
+      type: 'store',
+      feedback: this.feedback,
+      results: this.results
+    }
+    socket.send(temp);
+  }
+
 }
 
 export default new CreateStore();
